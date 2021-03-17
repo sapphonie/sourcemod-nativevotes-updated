@@ -2485,17 +2485,17 @@ static void TF2_DisplayVoteSetup(int client, ArrayList hVoteTypes)
 	{
 		char voteIssue[128];
 		
-		int voteData[CallVoteListData];
-		hVoteTypes.GetArray(i, voteData[0]);
+		CallVoteListData voteData;
+		hVoteTypes.GetArray(i, voteData, sizeof(CallVoteListData));
 		
-		Game_OverrideTypeToVoteString(voteData[CallVoteList_VoteType], voteIssue, sizeof(voteIssue));
+		Game_OverrideTypeToVoteString(voteData.CallVoteList_VoteType, voteIssue, sizeof(voteIssue));
 		
 		char translation[128];
-		Game_OverrideTypeToTranslationString(voteData[CallVoteList_VoteType], translation, sizeof(translation));
+		Game_OverrideTypeToTranslationString(voteData.CallVoteList_VoteType, translation, sizeof(translation));
 		
 		voteSetup.WriteString(voteIssue);
 		voteSetup.WriteString(translation);
-		voteSetup.WriteByte(voteData[CallVoteList_VoteEnabled]);
+		voteSetup.WriteByte(voteData.CallVoteList_VoteEnabled);
 	}
 	
 	EndMessage();
@@ -2826,14 +2826,14 @@ static void TF2_AddDefaultVotes(ArrayList hVoteTypes, bool bHideDisabledVotes)
 
 static void VoteTypeSet(ArrayList hVoteTypes, bool bHideDisabledVotes, NativeVotesOverride voteType, bool bEnabled)
 {
-	int voteList[CallVoteListData];
+	CallVoteListData voteList;
 	
 	if (bEnabled || !bHideDisabledVotes)
 	{
-		voteList[CallVoteList_VoteType] = voteType;
-		voteList[CallVoteList_VoteEnabled] = bEnabled;
+		voteList.CallVoteList_VoteType = voteType;
+		voteList.CallVoteList_VoteEnabled = bEnabled;
 		
-		hVoteTypes.PushArray(voteList[0]);
+		hVoteTypes.PushArray(voteList);
 	}
 }
 
@@ -3224,6 +3224,10 @@ static stock NativeVotesType TF2_VoteStringToVoteType(const char[] voteString)
 	{
 		voteType = NativeVotesType_Extend;
 	}
+	else if (StrEqual(voteString, TF2_VOTE_STRING_CHANGEMISSION, false))
+	{
+		voteType = NativeVotesType_ChgMission;
+	}
 	
 	return voteType;
 }
@@ -3338,6 +3342,10 @@ static stock NativeVotesType TF2_VoteOverrideToVoteType(NativeVotesOverride over
 		{
 			voteType = NativeVotesType_Extend;
 		}
+		case NativeVotesOverride_ChgMission:
+		{
+			voteType = NativeVotesType_ChgMission;
+		}
 	}
 	
 	return voteType;
@@ -3382,6 +3390,10 @@ static stock NativeVotesOverride TF2_VoteStringToVoteOverride(const char[] voteS
 	else if (StrEqual(voteString, TF2_VOTE_STRING_EXTEND, false))
 	{
 		overrideType = NativeVotesOverride_Extend;
+	}
+	else if (StrEqual(voteString, TF2_VOTE_STRING_CHANGEMISSION, false))
+	{
+		overrideType = NativeVotesOverride_ChgMission;
 	}
 	
 #if defined LOG
@@ -3447,6 +3459,10 @@ static stock bool TF2_OverrideTypeToVoteString(NativeVotesOverride overrideType,
 		case NativeVotesOverride_Extend:
 		{
 			strcopy(voteString, maxlength, TF2_VOTE_STRING_EXTEND);
+		}
+		case NativeVotesOverride_ChgMission:
+		{
+			strcopy(voteString, maxlength, TF2_VOTE_STRING_CHANGEMISSION);
 		}
 	}
 	
