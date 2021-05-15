@@ -151,7 +151,7 @@
 // User vote to scramble teams.  Can be immediate or end of round.
 #define TF2_VOTE_SCRAMBLE_IMMEDIATE_START	"#TF_vote_scramble_teams"
 #define TF2_VOTE_SCRAMBLE_ROUNDEND_START		"#TF_vote_should_scramble_round"
-#define TF2_VOTE_SCRAMBLE_PASSED 			"#TF_vote_passed_scramble_teams"
+#define TF2_VOTE_SCRAMBLE_PASSED			"#TF_vote_passed_scramble_teams"
 
 // User vote to change MvM mission
 #define TF2_VOTE_CHANGEMISSION_START			"#TF_vote_changechallenge"
@@ -3223,6 +3223,10 @@ static stock NativeVotesType TF2_VoteStringToVoteType(const char[] voteString)
 	else if (StrEqual(voteString, TF2_VOTE_STRING_EXTEND, false))
 	{
 		voteType = NativeVotesType_Extend;
+	}	
+	else if (StrEqual(voteString, TF2_VOTE_STRING_CHANGEMISSION, false))
+	{
+		voteType = NativeVotesType_ChgMission;
 	}
 	
 	return voteType;
@@ -3337,6 +3341,10 @@ static stock NativeVotesType TF2_VoteOverrideToVoteType(NativeVotesOverride over
 		case NativeVotesOverride_Extend:
 		{
 			voteType = NativeVotesType_Extend;
+		}		
+		case NativeVotesOverride_ChgMission:
+		{
+			voteType = NativeVotesType_ChgMission;
 		}
 	}
 	
@@ -3382,6 +3390,10 @@ static stock NativeVotesOverride TF2_VoteStringToVoteOverride(const char[] voteS
 	else if (StrEqual(voteString, TF2_VOTE_STRING_EXTEND, false))
 	{
 		overrideType = NativeVotesOverride_Extend;
+	}	
+	else if (StrEqual(voteString, TF2_VOTE_STRING_CHANGEMISSION, false))
+	{
+		overrideType = NativeVotesOverride_ChgMission;
 	}
 	
 #if defined LOG
@@ -3447,6 +3459,11 @@ static stock bool TF2_OverrideTypeToVoteString(NativeVotesOverride overrideType,
 		case NativeVotesOverride_Extend:
 		{
 			strcopy(voteString, maxlength, TF2_VOTE_STRING_EXTEND);
+		}		
+		
+		case NativeVotesOverride_ChgMission:
+		{
+			strcopy(voteString, maxlength, TF2_VOTE_STRING_CHANGEMISSION);
 		}
 	}
 	
