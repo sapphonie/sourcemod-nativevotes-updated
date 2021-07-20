@@ -3350,10 +3350,6 @@ static stock NativeVotesType TF2_VoteOverrideToVoteType(NativeVotesOverride over
 		{
 			voteType = NativeVotesType_ChgMission;
 		}
-		case NativeVotesOverride_ChgMission:
-		{
-			voteType = NativeVotesType_ChgMission;
-		}
 	}
 	
 	return voteType;
