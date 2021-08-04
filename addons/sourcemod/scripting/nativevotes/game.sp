@@ -2368,6 +2368,8 @@ static void TF2CSGO_SendOptionsToClient(NativeVote vote, int client)
 	}
 	optionsEvent.SetInt("count", itemCount);
 	optionsEvent.FireToClient(client);
+	// FireToClient does not close the handle, so we call Cancel() to do that for us.
+	optionsEvent.Cancel();
 }
 
 static void CSGO_VotePass(const char[] translation, const char[] details, int team, int client=0)
