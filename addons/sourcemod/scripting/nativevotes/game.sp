@@ -3401,10 +3401,6 @@ static stock NativeVotesOverride TF2_VoteStringToVoteOverride(const char[] voteS
 	{
 		overrideType = NativeVotesOverride_ChgMission;
 	}
-	else if (StrEqual(voteString, TF2_VOTE_STRING_CHANGEMISSION, false))
-	{
-		overrideType = NativeVotesOverride_ChgMission;
-	}
 	
 #if defined LOG
 	LogMessage("Resolved \"%s\" to %d", voteString, overrideType);
@@ -3471,10 +3467,6 @@ static stock bool TF2_OverrideTypeToVoteString(NativeVotesOverride overrideType,
 			strcopy(voteString, maxlength, TF2_VOTE_STRING_EXTEND);
 		}		
 		
-		case NativeVotesOverride_ChgMission:
-		{
-			strcopy(voteString, maxlength, TF2_VOTE_STRING_CHANGEMISSION);
-		}
 		case NativeVotesOverride_ChgMission:
 		{
 			strcopy(voteString, maxlength, TF2_VOTE_STRING_CHANGEMISSION);
