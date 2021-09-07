@@ -14,6 +14,7 @@ NativeVotes SourceMod plugin, with the following fixes:
 
 @sapphonie (me) - [Stop memleak with FireToClient](https://github.com/powerlord/sourcemod-nativevotes/pull/9)
 
+@justkamiii - [Fix caps](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/7)
 
 NativeVotes is a SourceMod Plugin that lets plugins use the L4D/L4D2/TF2/CSGO built-in vote screens.
 It supplies an API that plugins can use to create and display these votes.
