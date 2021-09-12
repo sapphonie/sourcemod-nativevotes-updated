@@ -27,12 +27,18 @@ jobs:
       run: |
         cd ./addons/sourcemod/scripting
         pwd
-        mkdir ../plugins/
-        spcomp -i"./include/" nativevotes.sp                -o ../plugins/nativevotes.smx
-        spcomp -i"./include/" nativevotes-basecommands.sp   -o ../plugins/nativevotes-basecommands.smx
-        spcomp -i"./include/" nativevotes_mapchooser.sp     -o ../plugins/nativevotes_mapchooser.smx
-        spcomp -i"./include/" nativevotes_nominations.sp    -o ../plugins/nativevotes_nominations.smx
-        spcomp -i"./include/" nativevotes_rockthevote.sp    -o ../plugins/nativevotes_rockthevote.smx
+        mkdir ../plugins/disabled -p
+        spcomp -i"./include/" nativevotes.sp                  -o ../plugins/nativevotes.smx
+        spcomp -i"./include/" nativevotes-basecommands.sp     -o ../plugins/nativevotes-basecommands.smx
+        spcomp -i"./include/" nativevotes_mapchooser.sp       -o ../plugins/nativevotes_mapchooser.smx
+        spcomp -i"./include/" nativevotes_nominations.sp      -o ../plugins/nativevotes_nominations.smx
+        spcomp -i"./include/" nativevotes_rockthevote.sp      -o ../plugins/nativevotes_rockthevote.smx
+        spcomp -i"./include/" nativevotes_votetest.sp         -o ../plugins/disabled/nativevotes_votetest.smx
+        spcomp -i"./include/" nativevotes_votemanager_test.sp -o ../plugins/disabled/nativevotes_votemanager_test.smx
+        spcomp -i"./include/" csgo_votestart_test.sp          -o ../plugins/disabled/csgo_votestart_test.smx
+        spcomp -i"./include/" votedelay_changelevel.sp        -o ../plugins/disabled/votedelay_changelevel.smx
+        spcomp -i"./include/" votediagnostics.sp              -o ../plugins/disabled/votediagnostics.smx
+        spcomp -i"./include/" votefailed.sp                   -o ../plugins/disabled/votefailed.smx
         ls -la
 
     - name: Zip package
