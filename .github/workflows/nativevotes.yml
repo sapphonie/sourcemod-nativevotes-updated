@@ -25,7 +25,7 @@ jobs:
 
     - name: Compile plugins
       run: |
-        cd ./addons/scripting
+        cd ./addons/sourcemod/scripting
         pwd
         spcomp -i"./include/" nativevotes.sp                -o ../plugins/nativevotes.smx
         spcomp -i"./include/" nativevotes-basecommands.sp   -o ../plugins/nativevotes-basecommands.smx
