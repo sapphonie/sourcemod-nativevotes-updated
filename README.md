@@ -1,7 +1,7 @@
 sourcemod-nativevotes-updated
 =====================
 
-NativeVotes SourceMod plugin, with the following fixes:
+### NativeVotes SourceMod plugin, with the following fixes:
 
 @nosoop - [Prevent NativeVote menu callback from freeing in-use forward handle](https://github.com/powerlord/sourcemod-nativevotes/pull/3)
 
