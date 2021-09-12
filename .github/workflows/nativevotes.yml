@@ -27,6 +27,7 @@ jobs:
       run: |
         cd ./addons/sourcemod/scripting
         pwd
+        mkdir ../plugins/
         spcomp -i"./include/" nativevotes.sp                -o ../plugins/nativevotes.smx
         spcomp -i"./include/" nativevotes-basecommands.sp   -o ../plugins/nativevotes-basecommands.smx
         spcomp -i"./include/" nativevotes_mapchooser.sp     -o ../plugins/nativevotes_mapchooser.smx
