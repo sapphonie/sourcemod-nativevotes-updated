@@ -19,7 +19,7 @@ NativeVotes SourceMod plugin, with the following fixes:
 
 @fdxx - [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/9)
 
-This github repo also autoreleases all changes to master. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
+This repo also autoreleases all changes to master. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
 
 NativeVotes is a SourceMod Plugin that lets plugins use the L4D/L4D2/TF2/CSGO built-in vote screens.
 It supplies an API that plugins can use to create and display these votes.
