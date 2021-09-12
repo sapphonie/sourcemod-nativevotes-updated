@@ -52,8 +52,8 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
-        tag_name: ${{ github.ref }}
-        release_name: ${{ github.ref }}
+        tag_name: workflow-build${{ github.run_number }}
+        release_name: Build ${{ steps.commit_info.outputs.sha_short  }}
         draft: false
         prerelease: false
 
