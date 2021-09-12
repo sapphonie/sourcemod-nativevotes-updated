@@ -8,11 +8,11 @@ addons:
       - g++-multilib
 
 install:
-  - wget http://www.sourcemod.net/smdrop/1.8/sourcemod-1.8.0-git5919-linux.tar.gz -O /tmp/sourcemod.tar.gz
+  - wget https://sm.alliedmods.net/smdrop/1.10/sourcemod-1.10.0-git6510-linux.tar.gz -O /tmp/sourcemod.tar.gz
   - tar -xzvf /tmp/sourcemod.tar.gz
 
 before_script:
-  - chmod +rx addons/sourcemod/scripting/spcomp
+  - chmod +rx addons/sourcemod/scripting/spcomp64
   - chmod +rx addons/sourcemod/scripting/compile.sh
   - cd addons/sourcemod/scripting/
   
