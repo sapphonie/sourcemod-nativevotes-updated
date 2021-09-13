@@ -17,7 +17,7 @@ sourcemod-nativevotes-updated
 
 @HotoCocoaco - [Add chi translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/8)
 
-@fdxx - [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/9)
+@fdxx - [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
 
 This repo also autoreleases all changes to master, compiled on SM 1.10. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
 
