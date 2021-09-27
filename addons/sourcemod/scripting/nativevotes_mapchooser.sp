@@ -287,7 +287,7 @@ public void OnConfigsExecuted()
 	{
 		if (g_Cvar_Bonusroundtime.FloatValue <= g_Cvar_VoteDuration.FloatValue)
 		{
-			LogError("Warning - Bonus Round Time shorter than Vote Time. Votes during bonus round may not have time to complete");
+			LogMessage("Warning - Bonus Round Time shorter than Vote Time. Votes during bonus round may not have time to complete");
 		}
 	}
 }
