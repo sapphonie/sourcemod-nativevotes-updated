@@ -493,6 +493,10 @@ int Game_ParseVote(const char[] option)
 {
 	int item = NATIVEVOTES_VOTE_INVALID;
 	
+#if defined LOG
+	LogMessage("Parsing vote option %s", option);
+#endif
+	
 	switch(g_EngineVersion)
 	{
 		case Engine_Left4Dead, Engine_Left4Dead2:
@@ -500,9 +504,13 @@ int Game_ParseVote(const char[] option)
 			item = L4DL4D2_ParseVote(option);
 		}
 		
-		case Engine_CSGO, Engine_TF2:
+		case Engine_CSGO:
 		{
-			item = TF2CSGO_ParseVote(option);
+			item = CSGO_ParseVote(option);
+		}
+		case Engine_TF2:
+		{
+			item = TF2_ParseVote(option);
 		}
 	}
 	
@@ -829,6 +837,9 @@ void Game_DisplayCallVoteFail(int client, NativeVotesCallFailType reason, int ti
 
 void Game_ClientSelectedItem(NativeVote vote, int client, int item)
 {
+#if defined LOG
+	LogMessage("Client %N selected item %d", client, item);
+#endif
 	switch(g_EngineVersion)
 	{
 		case Engine_Left4Dead, Engine_Left4Dead2:
@@ -2114,7 +2125,7 @@ static bool L4D2_CheckVotePassType(NativeVotesPassType passType)
 // TF2 and CSGO functions are still together in case Valve moves TF2 to protobufs.
 
 // NATIVEVOTES_VOTE_INVALID means parse failed
-static int TF2CSGO_ParseVote(const char[] option)
+static int CSGO_ParseVote(const char[] option)
 {
 	// option1 <-- 7 characters exactly
 	if (strlen(option) != 7)
@@ -2123,6 +2134,25 @@ static int TF2CSGO_ParseVote(const char[] option)
 	}
 
 	return StringToInt(option[6]) - 1;
+}
+
+// NATIVEVOTES_VOTE_INVALID means parse failed
+static int TF2_ParseVote(const char[] option)
+{
+	char arg1[8];
+	int iArg2 = BreakString(option, arg1, sizeof(arg1));
+	
+	char argOption[64];
+	strcopy(argOption, sizeof(argOption), option[iArg2]);
+	
+	int voteidx = StringToInt(arg1);
+	// option1 <-- 7 characters exactly
+	if (strlen(argOption) != 7)
+	{
+		return NATIVEVOTES_VOTE_INVALID;
+	}
+
+	return StringToInt(argOption[6]) - 1;
 }
 
 static void CSGO_ClientSelectedItem(NativeVote vote, int client, int item)
@@ -2249,9 +2279,9 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		// s_nNativeVoteIdx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx");
 		s_nNativeVoteIdx = -1;
 #if defined LOG
-		PrintToServer("Starting vote index: %d", s_nNativeVoteIdx);
+		PrintToServer("Starting vote index: %d (controller: %d)", s_nNativeVoteIdx, GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx"));
 #endif
-		// SetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx", s_nNativeVoteIdx + 1); // TODO(UPDATE)
+		SetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx", s_nNativeVoteIdx + 1); // TODO(UPDATE)
 	}
 	
 	// According to Source SDK 2013, vote_options is only sent for a multiple choice vote.

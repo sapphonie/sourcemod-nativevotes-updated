@@ -667,8 +667,8 @@ public Action Command_Vote(int client, const char[] command, int argc)
 		return Plugin_Continue;
 	}
 	
-	char option[32];
-	GetCmdArg(1, option, sizeof(option));
+	char option[64];
+	GetCmdArgString(option, sizeof(option));
 	
 	int item = Game_ParseVote(option);
 	
@@ -1124,6 +1124,10 @@ void EndVoting()
 	 */
 	NativeVote vote = g_hCurVote;
 	Internal_Reset();
+	
+#if defined LOG
+	LogMessage("Voting done");
+#endif
 	
 	/* Send vote info */
 	OnVoteResults(vote, votes, num_votes, num_items, client_list, num_clients);
