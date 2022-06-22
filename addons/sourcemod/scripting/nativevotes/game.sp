@@ -2439,6 +2439,7 @@ static void TF2_VotePass(const char[] translation, const char[] details, int tea
 	}
 
 	votePass.WriteByte(team);
+	votePass.WriteNum(s_nNativeVoteIdx);
 	votePass.WriteString(translation);
 	votePass.WriteString(details);
 
