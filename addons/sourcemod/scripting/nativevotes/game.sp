@@ -3594,4 +3594,3 @@ stock bool Game_IsVoteTypeYesNo(NativeVotesType voteType)
 	
 	return true;
 }
-
