@@ -2121,7 +2121,7 @@ static void TF2CSGO_ClientSelectedItem(NativeVote vote, int client, int item)
 	castEvent.SetInt("vote_option", item);
 	if (g_EngineVersion == Engine_TF2)
 	{
-		castEvent.SetInt("vote_option", 0);
+		castEvent.SetInt("vote_idx", 0);
 	}
 	castEvent.Fire();
 }
