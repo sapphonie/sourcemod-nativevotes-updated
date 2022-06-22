@@ -401,9 +401,10 @@ public Action L4D2_MessageVoteFail(UserMsg msg_id, BfRead message, const int[] p
 /*
 "vote_cast"
 {
-		"vote_option"   "byte"  // which option the player voted on
-		"team"                  "short"
-		"entityid"              "long"  // entity id of the voter
+		"vote_option"	"byte"  // which option the player voted on
+		"team"			"short"
+		"entityid"		"long"	// entity id of the voter
+		"voteidx"		"long"	// new in 06/21/22 update -sappho
 }
 */
 public void TF2CSGO_EventVoteCast(Event event, const char[] name, bool dontBroadcast)
@@ -411,7 +412,8 @@ public void TF2CSGO_EventVoteCast(Event event, const char[] name, bool dontBroad
 	int vote_option = event.GetInt("vote_option");
 	int team = event.GetInt("team");
 	int entityid = event.GetInt("entityid");
-	LogToFile(LOGFILE, "Vote Cast event: vote_option: %d, team: %d, client: %N", vote_option, team, entityid);
+	int voteidx = event.GetInt("voteidx");
+	LogToFile(LOGFILE, "Vote Cast event: vote_option: %d, team: %d, client: %N, voteidx %i", vote_option, team, entityid, voteidx);
 }
 
 /*
@@ -423,6 +425,7 @@ public void TF2CSGO_EventVoteCast(Event event, const char[] name, bool dontBroad
 		"option3"               "string"
 		"option4"               "string"
 		"option5"               "string"
+	    "voteidx"				"long"	// new in 06/21/22 update -sappho
 }
 */
 public void TF2CSGO_EventVoteOptions(Event event, const char[] name, bool dontBroadcast)
@@ -432,15 +435,17 @@ public void TF2CSGO_EventVoteOptions(Event event, const char[] name, bool dontBr
 	char option3[MAX_ARG_SIZE];
 	char option4[MAX_ARG_SIZE];
 	char option5[MAX_ARG_SIZE];
-	
+	int voteidx;
+
 	int count = event.GetInt("count");
 	event.GetString("option1", option1, sizeof(option1));
 	event.GetString("option2", option2, sizeof(option2));
 	event.GetString("option3", option3, sizeof(option3));
 	event.GetString("option4", option4, sizeof(option4));
 	event.GetString("option5", option5, sizeof(option5));
-	LogToFile(LOGFILE, "Vote Options event: count: %d, option1: %s, option2: %s, option3: %s, option4: %s, option5: %s", 
-		count, option1, option2, option3, option4, option5);
+	voteidx = event.GetInt("voteidx", -99);
+	LogToFile(LOGFILE, "Vote Options event: count: %d, option1: %s, option2: %s, option3: %s, option4: %s, option5: %s, voteidx %i", 
+		count, option1, option2, option3, option4, option5, voteidx);
 }
 
 /* 
@@ -669,7 +674,7 @@ public Action TF2CSGO_LogControllerValues(Handle timer)
 	{
 		voteCounts[i] = GetEntProp(g_VoteController, Prop_Send, "m_nVoteOptionCount", _, i);
 	}
-	
+	// int voteidx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx", _, i);
 	LogToFile(LOGFILE, "Vote Controller, issue: %d, team: %d, potentialVotes: %d, yesNo: %d, count1: %d, count2: %d, count3: %d, count4: %d, count5: %d",
 	activeIssue, team, potentialVotes, isYesNo, voteCounts[0], voteCounts[1], voteCounts[2], voteCounts[3], voteCounts[4]);
 	return Plugin_Continue;
@@ -719,6 +724,7 @@ public Action TF2_MessageCallVoteFailed(UserMsg msg_id, BfRead message, const in
 {
 	int reason = message.ReadByte();
 	int time = message.ReadShort();
+	//int voteidx = message.BfReadNum();
 	
 	LogToFile(LOGFILE, "CallVoteFailed Usermessage: reason: %d, time: %d", reason, time);
 	return Plugin_Continue;
