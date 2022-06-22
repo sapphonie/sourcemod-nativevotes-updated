@@ -2247,7 +2247,7 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		
 		// TODO(UPDATE): M-M-M-MULTIVOTE
 		// s_nNativeVoteIdx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx");
-		s_nNativeVoteIdx = 0;
+		s_nNativeVoteIdx = -1;
 #if defined LOG
 		PrintToServer("Starting vote index: %d", s_nNativeVoteIdx);
 #endif
