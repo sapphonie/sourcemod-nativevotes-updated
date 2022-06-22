@@ -47,8 +47,7 @@
 
 //----------------------------------------------------------------------------
 // Translation strings
-
-//----------------------------------------------------------------------------
+E-----------
 // L4D/L4D2
 
 #define L4DL4D2_VOTE_YES_STRING				"Yes"
@@ -2310,7 +2309,7 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 			if (g_EngineVersion == Engine_TF2)
 			{
 				// vote idx
-				bfStart.WriteByte(0);
+				bfStart.WriteNum(0);
 			}
 			bfStart.WriteByte(Data_GetInitiator(vote));
 			bfStart.WriteString(translation);
