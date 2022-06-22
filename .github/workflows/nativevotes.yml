@@ -3,7 +3,7 @@ name: Nativevotes Autobuild
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, tf2update ]
 
 jobs:
   run:
