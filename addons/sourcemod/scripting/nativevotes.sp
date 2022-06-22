@@ -655,6 +655,12 @@ public void OnMapEnd()
 
 public Action Command_Vote(int client, const char[] command, int argc)
 {
+#if defined LOG
+	char voteString[128];
+	GetCmdArgString(voteString, sizeof(voteString));
+	LogMessage("Client %N ran a vote command: %s", client, voteString);
+#endif
+	
 	// If we're not running a vote, return the vote control back to the server
 	if (!Internal_IsVoteInProgress() || g_ClientVotes[client] != VOTE_PENDING)
 	{

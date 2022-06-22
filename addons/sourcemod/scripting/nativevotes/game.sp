@@ -361,6 +361,14 @@ static ConVar g_Cvar_AutoBalance;
 
 static ConVar g_Cvar_HideDisabledIssues;
 
+/**
+ * TODO(UPDATE): For now we only support one vote from NativeVotes at a time.
+ * 
+ * Ideally we peek and poke at the game's `s_nVoteIdx` and increment it accordingly, but we also
+ * have to store an internal list of active votes.
+ */
+static int s_nNativeVoteIdx = 0;
+
 bool Game_IsGameSupported(char[] engineName="", int maxlength=0)
 {
 	g_EngineVersion = GetEngineVersion();
@@ -828,9 +836,13 @@ void Game_ClientSelectedItem(NativeVote vote, int client, int item)
 			L4DL4D2_ClientSelectedItem(client, item);
 		}
 		
-		case Engine_CSGO, Engine_TF2:
+		case Engine_CSGO:
 		{
-			TF2CSGO_ClientSelectedItem(vote, client, item);
+			CSGO_ClientSelectedItem(vote, client, item);
+		}
+		case Engine_TF2:
+		{
+			TF2_ClientSelectedItem(vote, client, item);
 		}
 /*
 		case Engine_Left4Dead:
@@ -2113,11 +2125,22 @@ static int TF2CSGO_ParseVote(const char[] option)
 	return StringToInt(option[6]) - 1;
 }
 
-static void TF2CSGO_ClientSelectedItem(NativeVote vote, int client, int item)
+static void CSGO_ClientSelectedItem(NativeVote vote, int client, int item)
 {
 	Event castEvent = CreateEvent("vote_cast");
 	
 	castEvent.SetInt("team", Data_GetTeam(vote));
+	castEvent.SetInt("entityid", client);
+	castEvent.SetInt("vote_option", item);
+	castEvent.Fire();
+}
+
+static void TF2_ClientSelectedItem(NativeVote vote, int client, int item)
+{
+	Event castEvent = CreateEvent("vote_cast");
+	
+	castEvent.SetInt("team", Data_GetTeam(vote));
+	castEvent.SetInt("voteidx", s_nNativeVoteIdx); // TODO(UPDATE): this was added in 2022-06-22 - figure out what the client voted for
 	castEvent.SetInt("entityid", client);
 	castEvent.SetInt("vote_option", item);
 	castEvent.Fire();
@@ -2221,6 +2244,14 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		{
 			SetEntProp(g_VoteController, Prop_Send, "m_nVoteOptionCount", 0, _, i);
 		}
+		
+		// TODO(UPDATE): M-M-M-MULTIVOTE
+		// s_nNativeVoteIdx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx");
+		s_nNativeVoteIdx = 0;
+#if defined LOG
+		PrintToServer("Starting vote index: %d", s_nNativeVoteIdx);
+#endif
+		// SetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx", s_nNativeVoteIdx + 1); // TODO(UPDATE)
 	}
 	
 	// According to Source SDK 2013, vote_options is only sent for a multiple choice vote.
@@ -2244,6 +2275,7 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 			optionsEvent.SetString(option, display);
 		}
 		optionsEvent.SetInt("count", itemCount);
+		optionsEvent.SetInt("voteidx", s_nNativeVoteIdx); // TODO(UPDATE)
 		optionsEvent.Fire();
 	}
 	
@@ -2298,6 +2330,7 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		{
 			BfWrite bfStart = UserMessageToBfWrite(voteStart);
 			bfStart.WriteByte(team);
+			bfStart.WriteNum(s_nNativeVoteIdx);
 			bfStart.WriteByte(Data_GetInitiator(vote));
 			bfStart.WriteString(translation);
 			if (bCustom && changeTitle == Plugin_Changed)
@@ -2367,6 +2400,7 @@ static void TF2CSGO_SendOptionsToClient(NativeVote vote, int client)
 		optionsEvent.SetString(option, display);
 	}
 	optionsEvent.SetInt("count", itemCount);
+	optionsEvent.SetInt("voteidx", s_nNativeVoteIdx); // TODO(UPDATE)
 	optionsEvent.FireToClient(client);
 }
 
@@ -2426,6 +2460,7 @@ static void TF2_VoteFail(int[] clients, int numClients, int reason, int team)
 	BfWrite voteFailed = UserMessageToBfWrite(StartMessage("VoteFailed", clients, numClients, USERMSG_RELIABLE));
 	
 	voteFailed.WriteByte(team);
+	voteFailed.WriteNum(s_nNativeVoteIdx); // TODO(UPDATE)
 	voteFailed.WriteByte(reason);
 
 	EndMessage();
@@ -2506,7 +2541,10 @@ static void TF2CSGO_ResetVote()
 	if (CheckVoteController())
 	{	
 		if (g_EngineVersion == Engine_TF2)
+		{
 			SetEntProp(g_VoteController, Prop_Send, "m_iActiveIssueIndex", INVALID_ISSUE);
+			SetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx", -1); // TODO(UPDATE)
+		}
 		
 		for (int i = 0; i < 5; i++)
 		{
