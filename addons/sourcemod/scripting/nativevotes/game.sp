@@ -47,7 +47,7 @@
 
 //----------------------------------------------------------------------------
 // Translation strings
-E-----------
+//----------------------------------------------------------------------------
 // L4D/L4D2
 
 #define L4DL4D2_VOTE_YES_STRING				"Yes"
@@ -3594,3 +3594,4 @@ stock bool Game_IsVoteTypeYesNo(NativeVotesType voteType)
 	
 	return true;
 }
+
