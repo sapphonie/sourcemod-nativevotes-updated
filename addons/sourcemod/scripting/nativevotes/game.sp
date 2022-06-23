@@ -2320,6 +2320,13 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		SetEntProp(g_VoteController, Prop_Send, "m_nPotentialVotes", num_clients);
 	}
 
+	// required to allow the initiator to vote on their own issue
+	// ValveSoftware/Source-1-Games#3934
+	if (sv_vote_holder_may_vote_no && vote.Initiator <= MaxClients)
+	{
+		sv_vote_holder_may_vote_no.ReplicateToClient(vote.Initiator, "1");
+	}
+
 	MenuAction actions = Data_GetActions(vote);
 
 	for (int i = 0; i < num_clients; ++i)
@@ -2377,6 +2384,7 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 			}
 			bfStart.WriteBool(bYesNo);
 		}
+		
 		EndMessage();
 	}
 	

@@ -112,6 +112,8 @@ int g_ClientVotes[MAXPLAYERS+1];
 bool g_bRevoting[MAXPLAYERS+1];
 char g_LeaderList[1024];
 
+ConVar sv_vote_holder_may_vote_no;
+
 // Map list stuffs
 
 #define STRINGTABLE_NAME					"ServerMapCycle"
@@ -261,6 +263,8 @@ public void OnPluginStart()
 	HookConVarChange(g_Cvar_VoteDelay, OnVoteDelayChange);
 
 	AddCommandListener(Command_Vote, "vote"); // All games, command listeners aren't case sensitive
+	
+	sv_vote_holder_may_vote_no = FindConVar("sv_vote_holder_may_vote_no");
 	
 	// The new version of the CallVote system is TF2 only
 	if (Game_AreVoteCommandsSupported())
