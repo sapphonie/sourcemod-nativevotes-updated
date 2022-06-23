@@ -2139,6 +2139,9 @@ static int CSGO_ParseVote(const char[] option)
 // NATIVEVOTES_VOTE_INVALID means parse failed
 static int TF2_ParseVote(const char[] option)
 {
+	// the update on 2022-06-22 changed the params passed to the `vote` command
+	// previously it was a single string "optionN", where N was the option to be selected
+	// now it's two arguments "X optionN", where X is the vote index being acted on
 	char arg1[8];
 	int iArg2 = BreakString(option, arg1, sizeof(arg1));
 	
@@ -2276,8 +2279,9 @@ static void TF2CSGO_DisplayVote(NativeVote vote, int[] clients, int num_clients)
 		}
 		
 		// TODO(UPDATE): M-M-M-MULTIVOTE
-		// s_nNativeVoteIdx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx");
-		s_nNativeVoteIdx = -1;
+		// we need unique vote indices; HUD elements for previous votes aren't cleaned up (?)
+		// the game implements this as `this->m_nVoteIdx = s_nVoteIdx++`
+		s_nNativeVoteIdx = GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx");
 #if defined LOG
 		PrintToServer("Starting vote index: %d (controller: %d)", s_nNativeVoteIdx, GetEntProp(g_VoteController, Prop_Send, "m_nVoteIdx"));
 #endif
