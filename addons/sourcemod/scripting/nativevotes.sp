@@ -112,6 +112,8 @@ int g_ClientVotes[MAXPLAYERS+1];
 bool g_bRevoting[MAXPLAYERS+1];
 char g_LeaderList[1024];
 
+ConVar sv_vote_holder_may_vote_no;
+
 // Map list stuffs
 
 #define STRINGTABLE_NAME					"ServerMapCycle"
@@ -261,6 +263,8 @@ public void OnPluginStart()
 	HookConVarChange(g_Cvar_VoteDelay, OnVoteDelayChange);
 
 	AddCommandListener(Command_Vote, "vote"); // All games, command listeners aren't case sensitive
+	
+	sv_vote_holder_may_vote_no = FindConVar("sv_vote_holder_may_vote_no");
 	
 	// The new version of the CallVote system is TF2 only
 	if (Game_AreVoteCommandsSupported())
@@ -655,14 +659,20 @@ public void OnMapEnd()
 
 public Action Command_Vote(int client, const char[] command, int argc)
 {
+#if defined LOG
+	char voteString[128];
+	GetCmdArgString(voteString, sizeof(voteString));
+	LogMessage("Client %N ran a vote command: %s", client, voteString);
+#endif
+	
 	// If we're not running a vote, return the vote control back to the server
 	if (!Internal_IsVoteInProgress() || g_ClientVotes[client] != VOTE_PENDING)
 	{
 		return Plugin_Continue;
 	}
 	
-	char option[32];
-	GetCmdArg(1, option, sizeof(option));
+	char option[64];
+	GetCmdArgString(option, sizeof(option));
 	
 	int item = Game_ParseVote(option);
 	
@@ -1118,6 +1128,10 @@ void EndVoting()
 	 */
 	NativeVote vote = g_hCurVote;
 	Internal_Reset();
+	
+#if defined LOG
+	LogMessage("Voting done");
+#endif
 	
 	/* Send vote info */
 	OnVoteResults(vote, votes, num_votes, num_items, client_list, num_clients);
