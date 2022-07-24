@@ -3,21 +3,36 @@ sourcemod-nativevotes-updated
 
 ### NativeVotes SourceMod plugin, with the following fixes:
 
-@nosoop - [Prevent NativeVote menu callback from freeing in-use forward handle](https://github.com/powerlord/sourcemod-nativevotes/pull/3)
+@nosoop
+- [Prevent NativeVote menu callback from freeing in-use forward handle](https://github.com/powerlord/sourcemod-nativevotes/pull/3)
+- [Hotfix for 2022-06-22 Update](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
 
-@rowedahelicon - [Fixed MvM mission votes from causing an Invalid forward handle](https://github.com/powerlord/sourcemod-nativevotes/pull/8)
+@rowedahelicon
+- [Fixed MvM mission votes from causing an Invalid forward handle](https://github.com/powerlord/sourcemod-nativevotes/pull/8)
 
-@Blueberryy - [Added Russian translation](https://github.com/powerlord/sourcemod-nativevotes/pull/7)
+@Blueberryy
+- [Added Russian translation](https://github.com/powerlord/sourcemod-nativevotes/pull/7)
 
-@arthurdead - [Sourcemod 1.11 syntax update](https://github.com/arthurdead/sourcemod-nativevotes/tree/sm111-fix)
+@arthurdead
+- [Sourcemod 1.11 syntax update](https://github.com/arthurdead/sourcemod-nativevotes/tree/sm111-fix)
 
-@sapphonie (me) - [Stop memleak with FireToClient](https://github.com/powerlord/sourcemod-nativevotes/pull/9)
+@sapphonie (me)
+- [Stop memleak with FireToClient](https://github.com/powerlord/sourcemod-nativevotes/pull/9)
 
-@justkamiii - [Fix caps](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/7)
+@justkamiii
+- [Fix caps](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/7)
 
-@HotoCocoaco - [Add chi translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/8)
+@HotoCocoaco
+- [Add chi translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/8)
 
-@fdxx - [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
+@fdxx
+- [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
+
+@satanskitty
+- [danish and turkish translations](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/17)
+
+@Spaenny
+- [added german translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/18)
 
 This repo also autoreleases all changes to master, compiled on SM 1.10. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
 
