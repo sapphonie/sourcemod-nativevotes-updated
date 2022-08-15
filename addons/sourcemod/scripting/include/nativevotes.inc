@@ -1271,7 +1271,7 @@ native void NativeVotes_DisplayRawFail(int[] clients, int numClients, NativeVote
  * @param team				Which team to show this to? Likely you want one of 
  * 							NATIVEVOTES_ALL_TEAMS, NATIVEVOTES_TEAM_1, or NATIVEVOTES_TEAM_2
  */
-stock void NativeVotes_DisplayRawFailToAll(NativeVotesFailType reason=NativeVotesFail_Generic, int team=NATIVEVOTES_ALL_TEAMS)
+stock Action NativeVotes_DisplayRawFailToAll(NativeVotesFailType reason=NativeVotesFail_Generic, int team=NATIVEVOTES_ALL_TEAMS)
 {
 	int total = 0;
 	int[] players = new int[MaxClients];
@@ -1296,7 +1296,7 @@ stock void NativeVotes_DisplayRawFailToAll(NativeVotesFailType reason=NativeVote
  * @param team				Which team to show this to? Likely you want one of 
  * 							NATIVEVOTES_ALL_TEAMS, NATIVEVOTES_TEAM_1, or NATIVEVOTES_TEAM_2
  */
-stock void NativeVotes_DisplayRawFailToOne(int client, NativeVotesFailType reason=NativeVotesFail_Generic, int team=NATIVEVOTES_ALL_TEAMS)
+stock Action NativeVotes_DisplayRawFailToOne(int client, NativeVotesFailType reason=NativeVotesFail_Generic, int team=NATIVEVOTES_ALL_TEAMS)
 {
 	int players[1];
 	
