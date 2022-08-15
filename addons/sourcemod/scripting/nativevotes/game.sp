@@ -964,6 +964,7 @@ public Action Game_ResetVote(Handle timer)
 			TF2CSGO_ResetVote();
 		}
 	}
+	return Plugin_Continue;
 }
 
 void Game_VoteYes(int client)
@@ -2546,10 +2547,10 @@ stock static void CSGO_DisplayVoteSetup(int client, ArrayList hVoteTypes)
 	{
 		char voteIssue[128];
 		
-		int voteData[CallVoteListData];
-		hVoteTypes.GetArray(i, voteData[0]);
+		CallVoteListData voteData;
+		hVoteTypes.GetArray(i, voteData.CallVoteList_VoteType);
 		
-		Game_OverrideTypeToVoteString(voteData[CallVoteList_VoteType], voteIssue, sizeof(voteIssue));
+		Game_OverrideTypeToVoteString(voteData.CallVoteList_VoteType, voteIssue, sizeof(voteIssue));
 		
 		
 		voteSetup.AddString("potential_issues", voteIssue);
@@ -3239,13 +3240,13 @@ static stock bool TF2_VoteTypeToVoteString(NativeVotesType voteType, char[] vote
 		
 		case NativeVotesType_ClassLimitsOn:
 		{
-			strcopy(voteString, maxlength, TF2_VOTE_STRING_CLASSLIMIT_ON);
+			strcopy(voteString, maxlength, TF2_VOTE_STRING_CLASSLIMIT);
 			valid = true;
 		}
 		
 		case NativeVotesType_ClassLimitsOff:
 		{
-			strcopy(voteString, maxlength, TF2_VOTE_STRING_CLASSLIMIT_OFF);
+			strcopy(voteString, maxlength, TF2_VOTE_STRING_CLASSLIMIT);
 			valid = true;
 		}
 		
@@ -3434,10 +3435,6 @@ static stock NativeVotesType TF2_VoteOverrideToVoteType(NativeVotesOverride over
 		{
 			voteType = NativeVotesType_Extend;
 		}		
-		case NativeVotesOverride_ChgMission:
-		{
-			voteType = NativeVotesType_ChgMission;
-		}
 	}
 	
 	return voteType;
