@@ -1284,7 +1284,6 @@ stock void NativeVotes_DisplayRawFailToAll(NativeVotesFailType reason=NativeVote
 	}
 	
 	NativeVotes_DisplayRawFail(players, total, reason, team);
-
 	return;
 }
 
