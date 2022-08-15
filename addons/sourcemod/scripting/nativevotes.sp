@@ -2008,7 +2008,7 @@ public int Native_RedrawClientVote(Handle plugin, int numParams)
 		// When revoting in TF2, NativeVotes_IsVoteInProgress always gets skipped because of Game_IsVoteInProgress() 
 		// 	TF2s vote controller will stay alive a few seconds after the vote is complete
 		// 	If one tries to revote right as a vote completes, it will throw an error
-		//ThrowNativeError(SP_ERROR_NATIVE, "No vote is in progress");
+		LogError(SP_ERROR_NATIVE, "No vote is in progress");
 		return false;
 	}
 	
