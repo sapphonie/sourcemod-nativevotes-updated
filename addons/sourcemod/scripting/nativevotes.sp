@@ -676,22 +676,19 @@ public Action Command_Vote(int client, const char[] command, int argc)
 	
 	int item = Game_ParseVote(option);
 	
-	bool cancel;
-
-	if (item == NATIVEVOTES_VOTE_INVALID)
+	// Make sure we don't go out of bounds on the vote
+	if (item == NATIVEVOTES_VOTE_INVALID || item > g_Items)
 	{
-		cancel = true;
+		return Plugin_Handled;
 	}
+
+	bool cancel;
 	
 	if (Data_GetFlags(g_hCurVote) & MENUFLAG_BUTTON_NOVOTE && item == 0)
 	{
 		cancel = true;
 	}
 
-	/*
-	 * If they choose no vote or the vote is invalid (typed command), then
-	 * treat it as no vote and adjust the numbers.
-	 */
 	if (cancel)
 	{
 		OnCancel(g_hCurVote, client, MenuCancel_Exit);

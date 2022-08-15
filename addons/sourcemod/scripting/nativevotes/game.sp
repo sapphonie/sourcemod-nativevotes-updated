@@ -2142,20 +2142,25 @@ static int TF2_ParseVote(const char[] option)
 	// the update on 2022-06-22 changed the params passed to the `vote` command
 	// previously it was a single string "optionN", where N was the option to be selected
 	// now it's two arguments "X optionN", where X is the vote index being acted on
-	char arg1[8];
-	int iArg2 = BreakString(option, arg1, sizeof(arg1));
 	
-	char argOption[64];
-	strcopy(argOption, sizeof(argOption), option[iArg2]);
-	
-	int voteidx = StringToInt(arg1);
-	// option1 <-- 7 characters exactly
-	if (strlen(argOption) != 7)
+	if (strlen(option) == 0 || GetCmdArgs() != 2)
 	{
 		return NATIVEVOTES_VOTE_INVALID;
 	}
-
-	return StringToInt(argOption[6]) - 1;
+	
+	// int voteidx = GetCmdArgInt(1);
+	
+	char voteOption[16];
+	GetCmdArg(2, voteOption, sizeof(voteOption));
+	
+	// option1 <-- 7 characters exactly
+	// voteOption's last character should be numeric
+	if (strlen(voteOption) != 7 || !IsCharNumeric(voteOption[6]))
+	{
+		return NATIVEVOTES_VOTE_INVALID;
+	}
+	
+	return StringToInt(voteOption[6]) - 1;
 }
 
 static void CSGO_ClientSelectedItem(NativeVote vote, int client, int item)
