@@ -26,13 +26,17 @@ sourcemod-nativevotes-updated
 - [Add chi translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/8)
 
 @fdxx
-- [Fix L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
+- [Fixed L4D2_VotePass](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/11)
 
 @satanskitty
 - [danish and turkish translations](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/17)
 
 @Spaenny
 - [added german translation](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/18)
+
+@iBoonie
+- [fixed a bug where you can spam invalid votes and forcibly prematurely change the level](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/20)
+- [removed an unnecessary ThrowNativeError](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/21)
 
 This repo also autoreleases all changes to master, compiled on SM 1.10. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
 
