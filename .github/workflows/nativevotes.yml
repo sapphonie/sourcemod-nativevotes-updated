@@ -8,7 +8,8 @@ on:
 jobs:
   run:
     name: Run action
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
+    shell: bash
 
     # skip build on '[ci skip]'
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -25,7 +26,7 @@ jobs:
 
     - name: Compile plugins 1.10
       run: |
-        versvers="1.10"; bash .github/nv_compile.sh
+        export versvers="1.10"; bash .github/nv_compile.sh
 
     - name: Setup SourcePawn 1.11 Compiler
       uses: rumblefrog/setup-sp@master
@@ -34,7 +35,7 @@ jobs:
 
     - name: Compile plugins 1.11
       run: |
-        versvers="1.11"; bash .github/nv_compile.sh
+        export versvers="1.11"; bash .github/nv_compile.sh
 
     - name: Set Commit Hash
       id: commit_info
