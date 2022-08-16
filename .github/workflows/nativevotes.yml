@@ -60,4 +60,4 @@ jobs:
       with:
         tag_name: ${{ steps.commit_info.outputs.sha_short }}
         files: |
-          build/nativevotes.*.zip
+          build/nativevotes.*
