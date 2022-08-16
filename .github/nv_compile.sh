@@ -1,4 +1,8 @@
-echo "vers = ${ververs}"
+#!/bin/bash
+
+
+versvers=$(spcomp64 -v | grep "Compiler" --color=never | cut -d " " -f 3)
+
 
 nv_plugs=("nativevotes")
 nv_plugs+=("nativevotes.sp")
@@ -15,6 +19,7 @@ nv_plugins_disabled+=("votediagnostics.sp")
 nv_plugins_disabled+=("votefailed.sp")
 
 pushd ./addons/sourcemod/scripting
+
 mkdir ../plugins_"${versvers}"/disabled -p || true
 
 
@@ -26,8 +31,9 @@ for target in "${nv_plugins_disabled[@]}"; do
     spcomp64 -i"./include/" "${target}" -o ../plugins_"${versvers}"/disabled/"${target}".smx
 done
 
+popd
+
 mkdir build || true
 7za a -r build/nv_"${versvers}".zip scripting/ translations/ plugins_"${versvers}"/
 ls -la
 
-popd

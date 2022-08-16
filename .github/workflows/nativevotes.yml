@@ -26,7 +26,7 @@ jobs:
     - name: Compile plugins 1.10
       shell: bash
       run: |
-        export versvers="1.10"; bash .github/nv_compile.sh
+        bash .github/nv_compile.sh
 
     - name: Setup SourcePawn 1.11 Compiler
       uses: rumblefrog/setup-sp@master
@@ -36,7 +36,7 @@ jobs:
     - name: Compile plugins 1.11
       shell: bash
       run: |
-        export versvers="1.11"; bash .github/nv_compile.sh
+        bash .github/nv_compile.sh
 
     - name: Set Commit Hash
       id: commit_info
