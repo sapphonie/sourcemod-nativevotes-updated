@@ -43,21 +43,8 @@ jobs:
       id: commit_info
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-    - name: Tag version
-      id: tag
-      uses: anothrNick/github-tag-action@1.34.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        CUSTOM_TAG: ${{ needs.build_and_push.outputs.tag }}
-
-    - name: Check created tag
-      id: check_tagged
-      run: |
-        echo "::set-output name=tagged::${{ (steps.check_tag.outputs.exists == 'false') && (steps.tag.outputs.new_tag == steps.tag.outputs.tag) }}"
-
-    - uses: ncipollo/release-action@v1
+    - name: Create artifact
+      uses: actions/upload-artifact@v2
       with:
-        artifacts: "build/nativevotes*"
-        tag: ${{ needs.tag_version.outputs.tag }}
-        token: ${{ secrets.GITHUB_TOKEN }}
-
+        name: ${{github.ref_name}}
+        path: build
