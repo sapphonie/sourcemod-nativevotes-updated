@@ -60,6 +60,7 @@ jobs:
         pwd
         cd build || true
         pwd
+        ls -la
 
     - name: Release
       uses: softprops/action-gh-release@v1
@@ -68,4 +69,4 @@ jobs:
       with:
         tag_name: ${{ steps.commit_info.outputs.sha_short }}
         fail_on_unmatched_files: true
-        files: build/nativevotes*
+        files: nativevotes*
