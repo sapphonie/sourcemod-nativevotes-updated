@@ -37,6 +37,7 @@ jobs:
       shell: bash
       run: |
         bash .github/nv_compile.sh
+        bash
 
     - name: Set Commit Hash
       id: commit_info
@@ -53,11 +54,18 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: Compile plugins 1.11
+      shell: bash
+      run: |
+        pwd
+        cd build || true
+        pwd
+
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.commit_info.outputs.sha_short }}
-        files: |
-          build/nativevotes.*
+        fail_on_unmatched_files: true
+        files: build/nativevotes*
