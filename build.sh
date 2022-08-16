@@ -1,12 +1,31 @@
 #!/bin/bash
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes.sp                  -o ./addons/sourcemod/plugins/nativevotes.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes-basecommands.sp     -o ./addons/sourcemod/plugins/nativevotes-basecommands.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes_mapchooser.sp       -o ./addons/sourcemod/plugins/nativevotes_mapchooser.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes_nominations.sp      -o ./addons/sourcemod/plugins/nativevotes_nominations.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes_rockthevote.sp      -o ./addons/sourcemod/plugins/nativevotes_rockthevote.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes_votetest.sp         -o ./addons/sourcemod/plugins/disabled/nativevotes_votetest.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/nativevotes_votemanager_test.sp -o ./addons/sourcemod/plugins/disabled/nativevotes_votemanager_test.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/csgo_votestart_test.sp          -o ./addons/sourcemod/plugins/disabled/csgo_votestart_test.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/votedelay_changelevel.sp        -o ./addons/sourcemod/plugins/disabled/votedelay_changelevel.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/votediagnostics.sp              -o ./addons/sourcemod/plugins/disabled/votediagnostics.smx
-        ~/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64 ./addons/sourcemod/scripting/votefailed.sp                   -o ./addons/sourcemod/plugins/disabled/votefailed.smx
+spcomp="/home/steph/tfTEST/tf2/tf/addons/sourcemod/scripting/spcomp64"
+outdir="/home/steph/tfTEST/tf2/tf/addons/sourcemod/plugins"
+
+scriptdir="addons/sourcemod/scripting"
+
+nv_plugs=("nativevotes")
+nv_plugs+=("nativevotes.sp")
+nv_plugs+=("nativevotes-basecommands.sp")
+nv_plugs+=("nativevotes_mapchooser.sp")
+nv_plugs+=("nativevotes_nominations.sp")
+nv_plugs+=("nativevotes_rockthevote.sp")
+
+nv_plugins_disabled=("nativevotes_votetest.sp")
+nv_plugins_disabled+=("nativevotes_votemanager_test.sp")
+nv_plugins_disabled+=("csgo_votestart_test.sp")
+nv_plugins_disabled+=("votedelay_changelevel.sp")
+nv_plugins_disabled+=("votediagnostics.sp")
+nv_plugins_disabled+=("votefailed.sp")
+
+# we start in git root
+pushd ${scriptdir}
+
+
+for target in "${nv_plugs[@]}"; do
+    ${spcomp} -i"./include/" "${target}" -o "${outdir}"/"${target}".smx || exit 1
+done
+
+for target in "${nv_plugins_disabled[@]}"; do
+    ${spcomp} -i"./include/" "${target}" -o ${outdir}/disabled/"${target}".smx || exit 1
+done
