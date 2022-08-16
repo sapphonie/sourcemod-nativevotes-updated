@@ -55,9 +55,9 @@ jobs:
 
     - name: Release
       uses: softprops/action-gh-release@v1
-      with:
-        tag_name: {{ steps.commit_info.outputs.sha_short }}
-        files: |
-          build/nativevotes.*.zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.commit_info.outputs.sha_short }}
+        files: |
+          build/nativevotes.*.zip
