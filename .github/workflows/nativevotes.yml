@@ -53,8 +53,8 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset
+    - name: Release
       uses: softprops/action-gh-release@v1
-        with:
-          files: build/nativevotes.*.zip
+      with:
+        files: |
+          build/nativevotes.*.zip
