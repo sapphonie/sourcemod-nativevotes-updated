@@ -43,11 +43,22 @@ jobs:
       id: commit_info
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-    - name: Release
-      uses: softprops/action-gh-release@v1
+    - name: Tag version
+      id: tag
+      if: ${{ steps.check_tag.outputs.exists == 'false' }}
+      uses: anothrNick/github-tag-action@1.34.0
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        CUSTOM_TAG: ${{ needs.build_and_push.outputs.tag }}
+
+    - name: Check created tag
+      id: check_tagged
+      run: |
+        echo "::set-output name=tagged::${{ (steps.check_tag.outputs.exists == 'false') && (steps.tag.outputs.new_tag == steps.tag.outputs.tag) }}"
+
+    - uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ steps.commit_info.outputs.sha_short }}
-        fail_on_unmatched_files: true
-        files: build/nativevotes*
+        artifacts: "build/nativevotes*"
+        tag: ${{ needs.tag_version.outputs.tag }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+
