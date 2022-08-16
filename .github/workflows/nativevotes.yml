@@ -43,17 +43,6 @@ jobs:
       id: commit_info
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
 
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: workflow-build${{ github.run_number }}
-        release_name: Build ${{ steps.commit_info.outputs.sha_short }}
-        draft: false
-        prerelease: false
-
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
