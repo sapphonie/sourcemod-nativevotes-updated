@@ -49,12 +49,15 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: workflow-build${{ github.run_number }}
-        release_name: Build ${{ steps.commit_info.outputs.sha_short  }}
+        release_name: Build ${{ steps.commit_info.outputs.sha_short }}
         draft: false
         prerelease: false
 
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
+        tag_name: {{ steps.commit_info.outputs.sha_short }}
         files: |
           build/nativevotes.*.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
