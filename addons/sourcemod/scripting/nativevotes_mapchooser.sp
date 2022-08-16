@@ -1493,41 +1493,42 @@ public int Native_RemoveNominationByOwner(Handle plugin, int numParams)
 }
 
 /* native void InitiateMapChooserVote(MapChange when, ArrayList inputarray=null); */
-public int Native_InitiateVote(Handle plugin, int numParams)
+public any Native_InitiateVote(Handle plugin, int numParams)
 {
 	MapChange when = view_as<MapChange>(GetNativeCell(1));
 	ArrayList inputarray = view_as<ArrayList>(GetNativeCell(2));
 	
 	LogAction(-1, -1, "Starting map vote because outside request");
 	InitiateVote(when, inputarray);
+	return true;
 }
 
 /* native bool CanMapChooserStartVote(); */
-public int Native_CanVoteStart(Handle plugin, int numParams)
+public any Native_CanVoteStart(Handle plugin, int numParams)
 {
 	return CanVoteStart();	
 }
 
 /* native bool HasEndOfMapVoteFinished(); */
-public int Native_CheckVoteDone(Handle plugin, int numParams)
+public any Native_CheckVoteDone(Handle plugin, int numParams)
 {
 	return g_MapVoteCompleted;
 }
 
 /* native bool EndOfMapVoteEnabled(); */
-public int Native_EndOfMapVoteEnabled(Handle plugin, int numParams)
+public any Native_EndOfMapVoteEnabled(Handle plugin, int numParams)
 {
 	return g_Cvar_EndOfMapVote.BoolValue;
 }
 
 /* native void GetExcludeMapList(ArrayList array); */
-public int Native_GetExcludeMapList(Handle plugin, int numParams)
+public any Native_GetExcludeMapList(Handle plugin, int numParams)
 {
 	ArrayList array = view_as<ArrayList>(GetNativeCell(1));
 	
 	if (array == null)
 	{
-		return;	
+		return false;
 	}
 	int size = g_OldMapList.Length;
 	char map[PLATFORM_MAX_PATH];
@@ -1538,17 +1539,19 @@ public int Native_GetExcludeMapList(Handle plugin, int numParams)
 		array.PushString(map);	
 	}
 	
-	return;
+	return true;
 }
 
 /* native void GetNominatedMapList(ArrayList maparray, ArrayList ownerarray = null); */
-public int Native_GetNominatedMapList(Handle plugin, int numParams)
+public any Native_GetNominatedMapList(Handle plugin, int numParams)
 {
 	ArrayList maparray = view_as<ArrayList>(GetNativeCell(1));
 	ArrayList ownerarray = view_as<ArrayList>(GetNativeCell(2));
 	
 	if (maparray == null)
-		return;
+	{
+		return false;
+	}
 
 	char map[PLATFORM_MAX_PATH];
 
@@ -1565,5 +1568,5 @@ public int Native_GetNominatedMapList(Handle plugin, int numParams)
 		}
 	}
 
-	return;
+	return true;
 }
