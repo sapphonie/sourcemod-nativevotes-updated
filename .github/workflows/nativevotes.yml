@@ -18,27 +18,34 @@ jobs:
       with:
         submodules: true
 
+    - name: Export vars
+      run: |
+        export 1_10_folder="plugins_1.10"
+        export 1_11_folder="plugins_1.11"
+        export 1_10_zipname="nativevotes_(sm-1-10).zip"
+        export 1_11_zipname="nativevotes_(sm-1-11).zip"
+
     - name: Setup SourcePawn 1.10 Compiler
       uses: rumblefrog/setup-sp@master
       with:
         version: "1.10.x"
 
-    - name: Compile plugins
+    - name: Compile plugins 1.10
       run: |
         pushd ./addons/sourcemod/scripting
         pwd
-        mkdir ../plugins_1.10/disabled -p
-        spcomp64 -i"./include/" nativevotes.sp                  -o ../plugins/nativevotes.smx
-        spcomp64 -i"./include/" nativevotes-basecommands.sp     -o ../plugins/nativevotes-basecommands.smx
-        spcomp64 -i"./include/" nativevotes_mapchooser.sp       -o ../plugins/nativevotes_mapchooser.smx
-        spcomp64 -i"./include/" nativevotes_nominations.sp      -o ../plugins/nativevotes_nominations.smx
-        spcomp64 -i"./include/" nativevotes_rockthevote.sp      -o ../plugins/nativevotes_rockthevote.smx
-        spcomp64 -i"./include/" nativevotes_votetest.sp         -o ../plugins/disabled/nativevotes_votetest.smx
-        spcomp64 -i"./include/" nativevotes_votemanager_test.sp -o ../plugins/disabled/nativevotes_votemanager_test.smx
-        spcomp64 -i"./include/" csgo_votestart_test.sp          -o ../plugins/disabled/csgo_votestart_test.smx
-        spcomp64 -i"./include/" votedelay_changelevel.sp        -o ../plugins/disabled/votedelay_changelevel.smx
-        spcomp64 -i"./include/" votediagnostics.sp              -o ../plugins/disabled/votediagnostics.smx
-        spcomp64 -i"./include/" votefailed.sp                   -o ../plugins/disabled/votefailed.smx
+        mkdir ../${1_10_folder}/disabled -p
+        spcomp64 -i"./include/" nativevotes.sp                  -o ../${1_10_folder}/nativevotes.smx
+        spcomp64 -i"./include/" nativevotes-basecommands.sp     -o ../${1_10_folder}/nativevotes-basecommands.smx
+        spcomp64 -i"./include/" nativevotes_mapchooser.sp       -o ../${1_10_folder}/nativevotes_mapchooser.smx
+        spcomp64 -i"./include/" nativevotes_nominations.sp      -o ../${1_10_folder}/nativevotes_nominations.smx
+        spcomp64 -i"./include/" nativevotes_rockthevote.sp      -o ../${1_10_folder}/nativevotes_rockthevote.smx
+        spcomp64 -i"./include/" nativevotes_votetest.sp         -o ../${1_10_folder}/disabled/nativevotes_votetest.smx
+        spcomp64 -i"./include/" nativevotes_votemanager_test.sp -o ../${1_10_folder}/disabled/nativevotes_votemanager_test.smx
+        spcomp64 -i"./include/" csgo_votestart_test.sp          -o ../${1_10_folder}/disabled/csgo_votestart_test.smx
+        spcomp64 -i"./include/" votedelay_changelevel.sp        -o ../${1_10_folder}/disabled/votedelay_changelevel.smx
+        spcomp64 -i"./include/" votediagnostics.sp              -o ../${1_10_folder}/disabled/votediagnostics.smx
+        spcomp64 -i"./include/" votefailed.sp                   -o ../${1_10_folder}/disabled/votefailed.smx
         ls -la
         popd
 
@@ -47,30 +54,30 @@ jobs:
       with:
         version: "1.11.x"
 
-    - name: Compile plugins
+    - name: Compile plugins 1.11
       run: |
         pushd ./addons/sourcemod/scripting
         pwd
-        mkdir ../plugins_1.11/disabled -p
-        spcomp64 -i"./include/" nativevotes.sp                  -o ../plugins/nativevotes.smx
-        spcomp64 -i"./include/" nativevotes-basecommands.sp     -o ../plugins/nativevotes-basecommands.smx
-        spcomp64 -i"./include/" nativevotes_mapchooser.sp       -o ../plugins/nativevotes_mapchooser.smx
-        spcomp64 -i"./include/" nativevotes_nominations.sp      -o ../plugins/nativevotes_nominations.smx
-        spcomp64 -i"./include/" nativevotes_rockthevote.sp      -o ../plugins/nativevotes_rockthevote.smx
-        spcomp64 -i"./include/" nativevotes_votetest.sp         -o ../plugins/disabled/nativevotes_votetest.smx
-        spcomp64 -i"./include/" nativevotes_votemanager_test.sp -o ../plugins/disabled/nativevotes_votemanager_test.smx
-        spcomp64 -i"./include/" csgo_votestart_test.sp          -o ../plugins/disabled/csgo_votestart_test.smx
-        spcomp64 -i"./include/" votedelay_changelevel.sp        -o ../plugins/disabled/votedelay_changelevel.smx
-        spcomp64 -i"./include/" votediagnostics.sp              -o ../plugins/disabled/votediagnostics.smx
-        spcomp64 -i"./include/" votefailed.sp                   -o ../plugins/disabled/votefailed.smx
+        mkdir ../${1_11_folder}/disabled -p
+        spcomp64 -i"./include/" nativevotes.sp                  -o ../${1_11_folder}/nativevotes.smx
+        spcomp64 -i"./include/" nativevotes-basecommands.sp     -o ../${1_11_folder}/nativevotes-basecommands.smx
+        spcomp64 -i"./include/" nativevotes_mapchooser.sp       -o ../${1_11_folder}/nativevotes_mapchooser.smx
+        spcomp64 -i"./include/" nativevotes_nominations.sp      -o ../${1_11_folder}/nativevotes_nominations.smx
+        spcomp64 -i"./include/" nativevotes_rockthevote.sp      -o ../${1_11_folder}/nativevotes_rockthevote.smx
+        spcomp64 -i"./include/" nativevotes_votetest.sp         -o ../${1_11_folder}/disabled/nativevotes_votetest.smx
+        spcomp64 -i"./include/" nativevotes_votemanager_test.sp -o ../${1_11_folder}/disabled/nativevotes_votemanager_test.smx
+        spcomp64 -i"./include/" csgo_votestart_test.sp          -o ../${1_11_folder}/disabled/csgo_votestart_test.smx
+        spcomp64 -i"./include/" votedelay_changelevel.sp        -o ../${1_11_folder}/disabled/votedelay_changelevel.smx
+        spcomp64 -i"./include/" votediagnostics.sp              -o ../${1_11_folder}/disabled/votediagnostics.smx
+        spcomp64 -i"./include/" votefailed.sp                   -o ../${1_11_folder}/disabled/votefailed.smx
         ls -la
         popd
 
     - name: Zip package
       run: |
         mkdir build
-        7za a -r build/nativevotes_(sm-1-10).zip scripting/ translations/ plugins_1.10/
-        7za a -r build/nativevotes_(sm-1-11).zip scripting/ translations/ plugins_1.11/
+        7za a -r build/${1_10_zipname} scripting/ translations/${1_10_folder}/
+        7za a -r build/${1_11_zipname} scripting/ translations/${1_11_folder}/
         ls -la
         pwd
 
@@ -97,6 +104,6 @@ jobs:
       with:
         # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/nativevotes_(sm-1-.*).zip
+        asset_path: ./build/nativevotes_.*.zip
         asset_name: nativevotes.zip
         asset_content_type: application/zip
