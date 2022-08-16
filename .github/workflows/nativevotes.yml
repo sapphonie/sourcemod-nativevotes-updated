@@ -8,7 +8,7 @@ on:
 jobs:
   run:
     name: Run action
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     # skip build on '[ci skip]'
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -18,35 +18,26 @@ jobs:
       with:
         submodules: true
 
-    - name: Setup SourcePawn Compiler
+    - name: Setup SourcePawn 1.10 Compiler
       uses: rumblefrog/setup-sp@master
       with:
         version: "1.10.x"
 
-    - name: Compile plugins
+    - name: Compile plugins 1.10
+      shell: bash
       run: |
-        cd ./addons/sourcemod/scripting
-        pwd
-        mkdir ../plugins/disabled -p
-        spcomp -i"./include/" nativevotes.sp                  -o ../plugins/nativevotes.smx
-        spcomp -i"./include/" nativevotes-basecommands.sp     -o ../plugins/nativevotes-basecommands.smx
-        spcomp -i"./include/" nativevotes_mapchooser.sp       -o ../plugins/nativevotes_mapchooser.smx
-        spcomp -i"./include/" nativevotes_nominations.sp      -o ../plugins/nativevotes_nominations.smx
-        spcomp -i"./include/" nativevotes_rockthevote.sp      -o ../plugins/nativevotes_rockthevote.smx
-        spcomp -i"./include/" nativevotes_votetest.sp         -o ../plugins/disabled/nativevotes_votetest.smx
-        spcomp -i"./include/" nativevotes_votemanager_test.sp -o ../plugins/disabled/nativevotes_votemanager_test.smx
-        spcomp -i"./include/" csgo_votestart_test.sp          -o ../plugins/disabled/csgo_votestart_test.smx
-        spcomp -i"./include/" votedelay_changelevel.sp        -o ../plugins/disabled/votedelay_changelevel.smx
-        spcomp -i"./include/" votediagnostics.sp              -o ../plugins/disabled/votediagnostics.smx
-        spcomp -i"./include/" votefailed.sp                   -o ../plugins/disabled/votefailed.smx
-        ls -la
+        bash .github/nv_compile.sh
 
-    - name: Zip package
+    - name: Setup SourcePawn 1.11 Compiler
+      uses: rumblefrog/setup-sp@master
+      with:
+        version: "1.11.x"
+
+    - name: Compile plugins 1.11
+      shell: bash
       run: |
-        mkdir build
-        7za a -r build/nativevotes.zip scripting/ plugins/ translations/
-        ls -la
-        pwd
+        bash .github/nv_compile.sh
+        bash
 
     - name: Set Commit Hash
       id: commit_info
@@ -63,14 +54,8 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Release
+      uses: softprops/action-gh-release@v1
       with:
-        # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./build/nativevotes.zip
-        asset_name: nativevotes.zip
-        asset_content_type: application/zip
+        tag_name: workflow-build${{ github.run_number }}
+        files: build/nativevotes*
