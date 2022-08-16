@@ -25,11 +25,11 @@ mkdir ../plugins/disabled -p || true
 
 
 for target in "${nv_plugs[@]}"; do
-    spcomp64 -i"./include/" "${target}" -o ../plugins/"${target}".smx
+    spcomp64 -i"./include/" "${target}" -o ../plugins/"${target}".smx || exit 1
 done
 
 for target in "${nv_plugins_disabled[@]}"; do
-    spcomp64 -i"./include/" "${target}" -o ../plugins/disabled/"${target}".smx
+    spcomp64 -i"./include/" "${target}" -o ../plugins/disabled/"${target}".smx || exit 1
 done
 
 popd
