@@ -54,14 +54,6 @@ jobs:
         draft: false
         prerelease: false
 
-    - name: Compile plugins 1.11
-      shell: bash
-      run: |
-        pwd
-        cd build || true
-        pwd
-        ls -la
-
     - name: Release
       uses: softprops/action-gh-release@v1
       env:
@@ -69,4 +61,4 @@ jobs:
       with:
         tag_name: ${{ steps.commit_info.outputs.sha_short }}
         fail_on_unmatched_files: true
-        files: nativevotes*
+        files: build/nativevotes*
