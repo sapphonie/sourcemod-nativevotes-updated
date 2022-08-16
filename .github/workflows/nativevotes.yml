@@ -9,7 +9,6 @@ jobs:
   run:
     name: Run action
     runs-on: ubuntu-22.04
-    shell: bash
 
     # skip build on '[ci skip]'
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
@@ -25,6 +24,7 @@ jobs:
         version: "1.10.x"
 
     - name: Compile plugins 1.10
+      shell: bash
       run: |
         export versvers="1.10"; bash .github/nv_compile.sh
 
@@ -34,6 +34,7 @@ jobs:
         version: "1.11.x"
 
     - name: Compile plugins 1.11
+      shell: bash
       run: |
         export versvers="1.11"; bash .github/nv_compile.sh
 
