@@ -23,11 +23,11 @@ for target in "${nv_plugs[@]}"; do
 done
 
 for target in "${nv_plugins_disabled[@]}"; do
-    spcomp64 -i"./include/" "${target}" -o ../disabled/plugins_"${versvers}"/"${target}".smx
+    spcomp64 -i"./include/" "${target}" -o ../plugins_"${versvers}"/disabled/"${target}".smx
 done
 
 mkdir build || true
-7za a -r build/nv_"${versvers}".zip scripting/ translations/plugins_"${versvers}"/
+7za a -r build/nv_"${versvers}".zip scripting/ translations/ plugins_"${versvers}"/
 ls -la
 
 popd
