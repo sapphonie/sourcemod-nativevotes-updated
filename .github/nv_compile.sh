@@ -18,22 +18,24 @@ nv_plugins_disabled+=("votedelay_changelevel.sp")
 nv_plugins_disabled+=("votediagnostics.sp")
 nv_plugins_disabled+=("votefailed.sp")
 
+# we start in git root
 pushd ./addons/sourcemod/scripting
 
-mkdir ../plugins_"${versvers}"/disabled -p || true
+mkdir ../plugins/disabled -p || true
 
 
 for target in "${nv_plugs[@]}"; do
-    spcomp64 -i"./include/" "${target}" -o ../plugins_"${versvers}"/"${target}".smx
+    spcomp64 -i"./include/" "${target}" -o ../plugins/"${target}".smx
 done
 
 for target in "${nv_plugins_disabled[@]}"; do
-    spcomp64 -i"./include/" "${target}" -o ../plugins_"${versvers}"/disabled/"${target}".smx
+    spcomp64 -i"./include/" "${target}" -o ../plugins/disabled/"${target}".smx
 done
 
 popd
 
 mkdir build || true
-7za a -r build/nv_"${versvers}".zip scripting/ translations/ plugins_"${versvers}"/
+7za a -r build/nativevotes_sm_"${versvers}".zip scripting/ translations/ plugins/
+rm plugins/ -rfv
 ls -la
 
