@@ -2,7 +2,7 @@
 
 
 # 1.10/1.11
-versvers=$(./spcomp64 -v | grep "Compiler" --color=never | cut -d " " -f 3 | cut -d "." -f 1,2)
+versvers=$(spcomp64 -v | grep "Compiler" --color=never | cut -d " " -f 3 | cut -d "." -f 1,2)
 
 
 nv_plugs=("nativevotes")
