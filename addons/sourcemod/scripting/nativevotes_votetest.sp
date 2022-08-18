@@ -115,7 +115,6 @@ public int YesNoHandler(NativeVote vote, MenuAction action, int param1, int para
 			}
 		}
 	}
-	return 0;
 }
 
 public Action Cmd_TestMult(int client, int args)
@@ -180,7 +179,6 @@ public int MultHandler(NativeVote vote, MenuAction action, int param1, int param
 			// Do something with info
 		}
 	}
-	return 0;
 }
 
 public Action Cmd_TestYesNoCustom(int client, int args)
