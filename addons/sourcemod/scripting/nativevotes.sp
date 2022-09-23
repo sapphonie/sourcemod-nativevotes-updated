@@ -391,7 +391,7 @@ public Action Command_CallVote(int client, const char[] command, int argc)
 		return Plugin_Continue;
 	}
 	
-	if (Internal_IsVoteInProgress() || Game_IsVoteInProgress())
+	if (Internal_IsVoteInProgress() || Game_IsVoteInProgress() || !IsClientInGame(client))
 	{
 		return Plugin_Handled;
 	}
