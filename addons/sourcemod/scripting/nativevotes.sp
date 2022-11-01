@@ -1284,6 +1284,12 @@ void StartVoting()
 			if (target > 0 && target <= MaxClients && IsClientConnected(target) && Internal_IsClientInVotePool(target))
 			{
 				Game_VoteNo(target);
+
+				// If there was only one player
+				if (g_hCurVote == null)
+				{
+					return;
+				}
 			}
 		}
 	}
