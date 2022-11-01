@@ -864,9 +864,17 @@ void OnVoteResults(NativeVote vote, const int[][] votes, int num_votes, int item
 		int winning_item;
 		if (num_items > 1)
 		{
-			/* Yes, we do */
-			winning_item = GetRandomInt(0, num_items - 1);
-			winning_item = votes[winning_item][VOTEINFO_ITEM_INDEX];
+			NativeVotesType voteType = Data_GetType(vote);
+
+			if (voteType == NativeVotesType_Custom_Mult || voteType == NativeVotesType_NextLevelMult)
+			{
+				winning_item = GetRandomInt(0, num_items - 1);
+				winning_item = votes[winning_item][VOTEINFO_ITEM_INDEX];
+			}
+			else
+			{
+				winning_item = NATIVEVOTES_VOTE_NO;
+			}
 		}
 		else 
 		{
