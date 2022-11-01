@@ -1277,7 +1277,7 @@ void StartVoting()
 	{
 		case NativeVotesType_Kick, NativeVotesType_KickCheating, NativeVotesType_KickIdle, NativeVotesType_KickScamming:
 		{
-			int target = Data_GetTarget(g_hCurVote);
+			int target = GetClientOfUserId(Data_GetTarget(g_hCurVote));
 			
 			if (target > 0 && target <= MaxClients && IsClientConnected(target) && Internal_IsClientInVotePool(target))
 			{
