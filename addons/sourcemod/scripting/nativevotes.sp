@@ -1763,14 +1763,18 @@ public int Native_GetItem(Handle plugin, int numParams)
 	if (vote == null)
 	{
 		ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
-		return;
 	}
 	
 	int position = GetNativeCell(2);
 	
 	int infoLength = GetNativeCell(4);
 	char[] info = new char[infoLength];
-	Data_GetItemInfo(vote, position, info, infoLength);
+
+	if (!Data_GetItemInfo(vote, position, info, infoLength))
+	{
+		return 0;
+	}
+
 	SetNativeString(3, info, infoLength);
 	
 	if (numParams >= 6)
@@ -1779,10 +1783,15 @@ public int Native_GetItem(Handle plugin, int numParams)
 		if (displayLength > 0)
 		{
 			char[] display = new char[displayLength];
-			Data_GetItemDisplay(vote, position, display, displayLength);
-			SetNativeString(5, display, displayLength);
+
+			if (Data_GetItemDisplay(vote, position, display, displayLength))
+            {
+				SetNativeString(5, display, displayLength);
+			}
 		}
 	}
+    
+	return 1;
 }
 
 // native NativeVotes_GetItemCount(Handle:vote);
