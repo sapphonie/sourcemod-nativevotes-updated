@@ -294,6 +294,7 @@ public void OnMapStart()
 		delete g_MapOverrides;
 		
 	g_OverridesSet = false;
+	g_NextVote = 0;
 }
 
 public Action Timer_RetryCallVote(Handle timer, any data)
