@@ -1182,19 +1182,20 @@ bool StartVote(NativeVote vote, int num_clients, int[] clients, int max_time, in
 	
 	Game_UpdateVoteCounts(g_hVotes, clientCount);
 	
-	DoClientVote(vote, clients, num_clients);	
-	
-	StartVoting();
-	
-	DrawHintProgress();
-	
-	return true;
+	if (DoClientVote(vote, clients, num_clients))
+	{
+		StartVoting();
+		DrawHintProgress();
+		return true;
+	}
+
+	return false;
 }
 
 bool DoClientVote(NativeVote vote, int[] clients, int num_clients)
 {
 	int totalPlayers = 0;
-	int[] realClients = new int[MaxClients+1];
+	int[] realClients = new int[num_clients];
 	
 	for (int i = 0; i < num_clients; ++i)
 	{
