@@ -1092,7 +1092,7 @@ public int Handler_MapVoteMenu(Menu menu, MenuAction action, int param1, int par
 		case MenuAction_End:
 		{
 			g_VoteMenu = null;
-			delete menu;
+			menu.Close();
 		}
 		
 		case MenuAction_Display:
@@ -1316,7 +1316,7 @@ void CreateNextVote()
 		tempMaps.Erase(b);
 	}
 	
-	delete tempMaps;
+	tempMaps.Close();
 }
 
 bool CanVoteStart()

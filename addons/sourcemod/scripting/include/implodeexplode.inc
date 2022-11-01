@@ -279,7 +279,7 @@ stock int GetStringMapImplodeSize(StringMap strings, int joinLength, ImplodePart
 	// for string terminator
 	size += 1;
 	
-	delete snapshot;
+	snapshot.Close();
 	
 	return size;
 }
@@ -358,7 +358,7 @@ stock int ImplodeStringMapToString(StringMap strings, const char[] join, char[] 
 		}
 	}
 	
-	delete snapshot;
+	snapshot.Close();
 	
 	return total;
 }

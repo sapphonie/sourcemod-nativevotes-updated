@@ -314,26 +314,26 @@ void Data_CloseVote(KeyValues vote)
 	Handle handler = Data_GetHandler(vote);
 	if (handler != null)
 	{
-		delete handler;
+		handler.Close();
 	}
 	
 	Handle voteResults = Data_GetResultCallback(vote);
 	if (voteResults != null)
 	{
-		delete voteResults;
+		voteResults.Close();
 	}
 	
 	ArrayList infoArray = view_as<ArrayList>(vote.GetNum(INFO, view_as<int>(INVALID_HANDLE)));
 	if (infoArray != null)
 	{
-		delete infoArray;
+		infoArray.Close();
 	}
 	
 	ArrayList displayArray = view_as<ArrayList>(vote.GetNum(DISPLAY, view_as<int>(INVALID_HANDLE)));
 	if (displayArray != null)
 	{
-		delete displayArray;
+		displayArray.Close();
 	}
 	
-	delete vote;
+	vote.Close();
 }

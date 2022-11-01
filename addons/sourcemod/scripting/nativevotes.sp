@@ -290,8 +290,7 @@ public void OnPluginStart()
 public void OnMapStart()
 {
 	// Map list stuffs
-	if (g_MapOverrides != null)
-		delete g_MapOverrides;
+	delete g_MapOverrides;
 		
 	g_OverridesSet = false;
 	g_NextVote = 0;
@@ -354,7 +353,7 @@ public void ProcessMapList()
 	}
 	else
 	{
-		delete overrideList;
+		overrideList.Close();
 	}
 }
 
@@ -466,12 +465,12 @@ public Action Command_CallVote(int client, const char[] command, int argc)
 				LogMessage("Overriding VoteSetup message");
 #endif
 				Game_DisplayVoteSetup(client, hVoteTypes);
-				delete hVoteTypes;
+				hVoteTypes.Close();
 				return Plugin_Handled;
 			}
 			else
 			{
-				delete hVoteTypes;
+				hVoteTypes.Close();
 				return Plugin_Continue;
 			}
 		}
@@ -650,10 +649,7 @@ public void OnMapEnd()
 		g_hCurVote = null;
 	}
 	
-	if (g_hDisplayTimer != null)
-	{
-		delete g_hDisplayTimer;
-	}
+	delete g_hDisplayTimer;
 
 //	g_hVoteTimer = INVALID_HANDLE;
 }
@@ -839,7 +835,7 @@ Action DoAction(NativeVote vote, MenuAction action, int param1, int param2, Acti
 	Call_PushCell(param1);
 	Call_PushCell(param2);
 	Call_Finish(res);
-	delete handler;
+	handler.Close();
 	return res;
 }
 
@@ -1094,10 +1090,7 @@ void EndVoting()
 		g_NextVote = GetTime() + voteDelay;
 	}
 	
-	if (g_hDisplayTimer != null)
-	{
-		delete g_hDisplayTimer;
-	}
+	delete g_hDisplayTimer;
 	
 	if (g_bCancelled)
 	{
@@ -1397,10 +1390,7 @@ void Internal_Reset(bool cancel=false)
 	g_LeaderList[0] = '\0';
 	g_TotalClients = 0;
 	
-	if (g_hDisplayTimer != null)
-	{
-		delete g_hDisplayTimer;
-	}
+	delete g_hDisplayTimer;
 	
 	if (!cancel)
 	{

@@ -436,7 +436,7 @@ void BuildMapMenu()
 
 	g_MapMenu.ExitButton = true;
 
-	delete excludeMaps;
+	excludeMaps.Close();
 }
 
 public int Handler_MapSelectMenu(Menu menu, MenuAction action, int param1, int param2)
@@ -639,7 +639,7 @@ public Action NativeVotes_OverrideMaps(StringMap mapList)
 		mapList.SetString(displayName, map);
 	}
 	
-	delete snapshot;
+	snapshot.Close();
 	
 	if (mapList.Size > 0)
 	{
