@@ -1282,7 +1282,7 @@ void StartVoting()
 		{
 			int target = GetClientOfUserId(Data_GetTarget(g_hCurVote));
 			
-			if (target > 0 && target <= MaxClients && IsClientConnected(target) && Internal_IsClientInVotePool(target))
+			if (Internal_IsClientInVotePool(target))
 			{
 				Game_VoteNo(target);
 
