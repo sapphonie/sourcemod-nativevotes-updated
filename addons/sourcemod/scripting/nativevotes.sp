@@ -1782,7 +1782,7 @@ public int Native_GetItem(Handle plugin, int numParams)
 			char[] display = new char[displayLength];
 
 			if (Data_GetItemDisplay(vote, position, display, displayLength))
-            {
+			{
 				SetNativeString(5, display, displayLength);
 			}
 		}
