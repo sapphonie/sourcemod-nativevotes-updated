@@ -2392,14 +2392,9 @@ public int Native_SetTarget(Handle plugin, int numParams)
 	}
 	
 	int userid;
-	char steamId[20];
+	char steamId[MAX_AUTHID_LENGTH];
 	
-	if (client <= 0)
-	{
-		userid = 0;
-		steamId = "";
-	}
-	else
+	if (client > 0)
 	{
 		userid = GetClientUserId(client);
 		if (!GetClientAuthId(client, AuthId_Steam2, steamId, sizeof(steamId)))
