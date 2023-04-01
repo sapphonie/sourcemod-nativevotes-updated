@@ -1920,15 +1920,17 @@ static void L4D_DisplayVote(NativeVote vote, int num_clients)
     
 }
 
+/*
 static void L4D_VoteEnded()
 {
     Event endEvent = CreateEvent("vote_ended");
     endEvent.Fire();
 }
+*/
 
 static void L4D_VotePass(const char[] translation, const char[] details, int team)
 {
-    L4D_VoteEnded();
+    // L4D_VoteEnded();
     
     Event passEvent = CreateEvent("vote_passed");
     passEvent.SetString("details", translation);
@@ -1939,7 +1941,7 @@ static void L4D_VotePass(const char[] translation, const char[] details, int tea
 
 static void L4D_VoteFail(int team)
 {
-    L4D_VoteEnded();
+    // L4D_VoteEnded();
 
     Event failEvent = CreateEvent("vote_failed");
     failEvent.SetInt("team", team);
