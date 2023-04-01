@@ -85,6 +85,7 @@ ConVar g_Cvar_VoteChat;
 ConVar g_Cvar_VoteConsole;
 ConVar g_Cvar_VoteClientConsole;
 ConVar g_Cvar_VoteDelay;
+ConVar g_Cvar_FastYesNo;
 
 //----------------------------------------------------------------------------
 // Used to track current vote data
@@ -257,6 +258,7 @@ public void OnPluginStart()
     g_Cvar_VoteConsole = CreateConVar("nativevotes_progress_console", "0", "Show current vote progress as console messages", FCVAR_NONE, true, 0.0, true, 1.0);
     g_Cvar_VoteClientConsole = CreateConVar("nativevotes_progress_client_console", "0", "Show current vote progress as console messages to clients", FCVAR_NONE, true, 0.0, true, 1.0);
     g_Cvar_VoteDelay = CreateConVar("nativevotes_vote_delay", "30", "Sets the recommended time in between public votes", FCVAR_NONE, true, 0.0);
+    g_Cvar_FastYesNo = CreateConVar("nativevotes_fast_yesno", "0", "Force yes/no voting to end if enough votes are received", FCVAR_NONE, true, 0.0, true, 1.0);
     
     Game_InitializeCvars();
     
@@ -1044,8 +1046,8 @@ void BuildVoteLeaders()
     {
         int cur_item = votes[i][VOTEINFO_ITEM_INDEX];
         char choice[256];
-        Data_GetItemDisplay(g_hCurVote, cur_item, choice, sizeof(choice));
-        Format(g_LeaderList, sizeof g_LeaderList, "%s\n%i. %s: (%i)", g_LeaderList, i+1, choice, votes[i][VOTEINFO_ITEM_VOTES]);
+        Data_GetItemDisplay(g_hCurVote, cur_item, choice, sizeof choice);
+        Format(g_LeaderList, sizeof g_LeaderList, "%s\n%i. %s: (%i)", g_LeaderList, i + 1, choice, votes[i][VOTEINFO_ITEM_VOTES]);
     }
 }
 
@@ -1068,15 +1070,33 @@ public int SortVoteItems(int[] a, int[] b, const int[][] array, Handle hndl)
 void DecrementPlayerCount()
 {
     --g_Clients;
-    
-    // The vote is running and we have no clients left, so end the vote.
-    if (g_bStarted && g_Clients == 0)
-    {
-        EndVoting();
-    }
-    
-}
 
+    if (g_bStarted)
+    {
+        if ((g_Clients > 0) && g_Cvar_FastYesNo.BoolValue)
+        {
+            NativeVotesType voteType = Data_GetType(g_hCurVote);
+
+            if ((voteType != NativeVotesType_Custom_Mult) &&
+                (voteType != NativeVotesType_NextLevelMult))
+            {
+                int yesVotes = g_hVotes.Get(NATIVEVOTES_VOTE_YES);
+                int noVotes = g_hVotes.Get(NATIVEVOTES_VOTE_NO);
+
+                if ((yesVotes > (noVotes + g_Clients)) ||
+                    (noVotes >= (yesVotes + g_Clients)))
+                {
+                    g_Clients = 0;
+                }
+            }
+        }
+
+        if (g_Clients == 0)
+        {
+            EndVoting();
+        }
+    }
+}
 
 void EndVoting()
 {

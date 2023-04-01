@@ -1667,11 +1667,11 @@ static void GetEngineVersionName(EngineVersion version, char[] printName, int ma
 // NATIVEVOTES_VOTE_INVALID means parse failed
 static int L4DL4D2_ParseVote(const char[] option)
 {
-    if (StrEqual(option, "Yes", false))
+    if (StrEqual(option, L4DL4D2_VOTE_YES_STRING, false))
     {
         return NATIVEVOTES_VOTE_YES;
     }
-    else if (StrEqual(option, "No", false))
+    else if (StrEqual(option, L4DL4D2_VOTE_NO_STRING, false))
     {
         return NATIVEVOTES_VOTE_NO;
     }
