@@ -1047,7 +1047,6 @@ void BuildVoteLeaders()
         Data_GetItemDisplay(g_hCurVote, cur_item, choice, sizeof(choice));
         Format(g_LeaderList, sizeof g_LeaderList, "%s\n%i. %s: (%i)", g_LeaderList, i+1, choice, votes[i][VOTEINFO_ITEM_VOTES]);
     }
-    
 }
 
 public int SortVoteItems(int[] a, int[] b, const int[][] array, Handle hndl)
@@ -1068,7 +1067,7 @@ public int SortVoteItems(int[] a, int[] b, const int[][] array, Handle hndl)
 
 void DecrementPlayerCount()
 {
-    g_Clients--;
+    --g_Clients;
     
     // The vote is running and we have no clients left, so end the vote.
     if (g_bStarted && g_Clients == 0)
@@ -1629,7 +1628,6 @@ public int Native_Display(Handle plugin, int numParams)
     if (vote == null)
     {
         ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
-        return false;
     }
     
     int count = GetNativeCell(3);
@@ -1654,7 +1652,6 @@ public int Native_AddItem(Handle plugin, int numParams)
     if (vote == null)
     {
         ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
-        return false;
     }
 
     NativeVotesType voteType = Data_GetType(vote);
@@ -1679,7 +1676,6 @@ public int Native_InsertItem(Handle plugin, int numParams)
     if (vote == null)
     {
         ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
-        return false;
     }
 
     NativeVotesType voteType = Data_GetType(vote);
@@ -1694,7 +1690,6 @@ public int Native_InsertItem(Handle plugin, int numParams)
     if (position < 0)
     {
         ThrowNativeError(SP_ERROR_NATIVE, "Vote index can't be negative: %d", position);
-        return false;
     }
     
     char info[256];
@@ -1712,7 +1707,6 @@ public int Native_RemoveItem(Handle plugin, int numParams)
     if (vote == null)
     {
         ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
-        return false;
     }
     
     NativeVotesType voteType = Data_GetType(vote);
@@ -1916,7 +1910,7 @@ public int Native_SetNoVoteButton(Handle plugin, int numParams)
     NativeVote vote = GetNativeCell(1);
     if (vote == null)
     {
-        return ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
+        ThrowNativeError(SP_ERROR_NATIVE, "NativeVotes handle %x is invalid", vote);
     }
 
     int flags = Data_GetFlags(vote);
