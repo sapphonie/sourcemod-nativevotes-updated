@@ -46,143 +46,143 @@ TopMenu hTopMenu;
 
 public Plugin myinfo = 
 {
-	name = "NativeVotes Basic Commands",
-	author = "Powerlord and AlliedModders LLC",
-	description = "Revote and Cancel support for NativeVotes",
-	version = VERSION,
-	url = "https://forums.alliedmods.net/showthread.php?t=208008"
+    name = "NativeVotes Basic Commands",
+    author = "Powerlord and AlliedModders LLC",
+    description = "Revote and Cancel support for NativeVotes",
+    version = VERSION,
+    url = "https://forums.alliedmods.net/showthread.php?t=208008"
 }
 
 public void OnPluginStart()
 {
-	LoadTranslations("core.phrases");
-	LoadTranslations("common.phrases");
-	
-	AddCommandListener(Command_CancelVote, "sm_cancelvote");
-	AddCommandListener(Command_ReVote, "sm_revote");
+    LoadTranslations("core.phrases");
+    LoadTranslations("common.phrases");
+    
+    AddCommandListener(Command_CancelVote, "sm_cancelvote");
+    AddCommandListener(Command_ReVote, "sm_revote");
 }
 
 bool PerformCancelVote(int client)
 {
-	if (!NativeVotes_IsVoteInProgress())
-	{
-		return false;
-	}
+    if (!NativeVotes_IsVoteInProgress())
+    {
+        return false;
+    }
 
-	ShowActivity2(client, "[NV] ", "%t", "Cancelled Vote");
-	
-	NativeVotes_Cancel();
-	return true;
+    ShowActivity2(client, "[NV] ", "%t", "Cancelled Vote");
+    
+    NativeVotes_Cancel();
+    return true;
 }
 
 public Action Command_CancelVote(int client, const char[] command, int argc)
 {
-	if (!CheckCommandAccess(client, "sm_cancelvote", ADMFLAG_VOTE))
-	{
-		if (IsVoteInProgress())
-		{
-			// Let basecommands handle it
-			return Plugin_Continue;
-		}
-		
-		ReplyToCommand(client, "%t", "No Access");
-		return Plugin_Stop;
-	}
-	
-	if (PerformCancelVote(client))
-	{
-		return Plugin_Stop;
-	}
-	else
-	{
-		return Plugin_Continue;
-	}
+    if (!CheckCommandAccess(client, "sm_cancelvote", ADMFLAG_VOTE))
+    {
+        if (IsVoteInProgress())
+        {
+            // Let basecommands handle it
+            return Plugin_Continue;
+        }
+        
+        ReplyToCommand(client, "%t", "No Access");
+        return Plugin_Stop;
+    }
+    
+    if (PerformCancelVote(client))
+    {
+        return Plugin_Stop;
+    }
+    else
+    {
+        return Plugin_Continue;
+    }
 }
 
 public void AdminMenu_CancelVote(Handle topmenu, 
-							  TopMenuAction action,
-							  TopMenuObject object_id,
-							  int param,
-							  char[] buffer,
-							  int maxlength)
+                              TopMenuAction action,
+                              TopMenuObject object_id,
+                              int param,
+                              char[] buffer,
+                              int maxlength)
 {
-	if (action == TopMenuAction_DisplayOption)
-	{
-		Format(buffer, maxlength, "%T", "Cancel vote", param);
-	}
-	else if (action == TopMenuAction_SelectOption)
-	{
-		PerformCancelVote(param);
-		RedisplayAdminMenu(topmenu, param);	
-	}
-	else if (action == TopMenuAction_DrawOption)
-	{
-		buffer[0] = NativeVotes_IsVoteInProgress() ? ITEMDRAW_DEFAULT : ITEMDRAW_IGNORE;
-	}
+    if (action == TopMenuAction_DisplayOption)
+    {
+        FormatEx(buffer, maxlength, "%T", "Cancel vote", param);
+    }
+    else if (action == TopMenuAction_SelectOption)
+    {
+        PerformCancelVote(param);
+        RedisplayAdminMenu(topmenu, param); 
+    }
+    else if (action == TopMenuAction_DrawOption)
+    {
+        buffer[0] = NativeVotes_IsVoteInProgress() ? ITEMDRAW_DEFAULT : ITEMDRAW_IGNORE;
+    }
 }
 
 public Action Command_ReVote(int client, const char[] command, int argc)
 {
-	if (client == 0)
-	{
-		return Plugin_Continue;
-	}
-	
-	if (!NativeVotes_IsVoteInProgress())
-	{
-		return Plugin_Continue;
-	}
-	
-	if (!NativeVotes_IsClientInVotePool(client))
-	{
-		if (IsVoteInProgress())
-		{
-			// Let basecommands handle it
-			return Plugin_Continue;
-		}
-		
-		ReplyToCommand(client, "[NV] %t", "Cannot participate in vote");
-		return Plugin_Stop;
-	}
-	
-	if (NativeVotes_RedrawClientVote(client))
-	{
-		return Plugin_Stop;
-	}
-	else if (!IsVoteInProgress())
-	{
-		ReplyToCommand(client, "[NV] %t", "Cannot change vote");
-		return Plugin_Stop;
-	}
-	
-	return Plugin_Continue;
+    if (client == 0)
+    {
+        return Plugin_Continue;
+    }
+    
+    if (!NativeVotes_IsVoteInProgress())
+    {
+        return Plugin_Continue;
+    }
+    
+    if (!NativeVotes_IsClientInVotePool(client))
+    {
+        if (IsVoteInProgress())
+        {
+            // Let basecommands handle it
+            return Plugin_Continue;
+        }
+        
+        ReplyToCommand(client, "[NV] %t", "Cannot participate in vote");
+        return Plugin_Stop;
+    }
+    
+    if (NativeVotes_RedrawClientVote(client))
+    {
+        return Plugin_Stop;
+    }
+    else if (!IsVoteInProgress())
+    {
+        ReplyToCommand(client, "[NV] %t", "Cannot change vote");
+        return Plugin_Stop;
+    }
+    
+    return Plugin_Continue;
 }
 
 public void OnAdminMenuReady(Handle aTopMenu)
 {
-	TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
-	
-	/* Block us from being called twice */
-	if (topmenu == hTopMenu)
-	{
-		return;
-	}
-	
-	/* Save the Handle */
-	hTopMenu = topmenu;
-	
-	TopMenuObject voting_commands = hTopMenu.FindCategory(ADMINMENU_VOTINGCOMMANDS);
+    TopMenu topmenu = TopMenu.FromHandle(aTopMenu);
+    
+    /* Block us from being called twice */
+    if (topmenu == hTopMenu)
+    {
+        return;
+    }
+    
+    /* Save the Handle */
+    hTopMenu = topmenu;
+    
+    TopMenuObject voting_commands = hTopMenu.FindCategory(ADMINMENU_VOTINGCOMMANDS);
 
-	if (voting_commands != INVALID_TOPMENUOBJECT)
-	{
-		hTopMenu.AddItem("sm_cancelvote", AdminMenu_CancelVote, voting_commands, "sm_cancelvote", ADMFLAG_VOTE);
-	}
+    if (voting_commands != INVALID_TOPMENUOBJECT)
+    {
+        hTopMenu.AddItem("sm_cancelvote", AdminMenu_CancelVote, voting_commands, "sm_cancelvote", ADMFLAG_VOTE);
+    }
 }
 
 public void OnLibraryRemoved(const char[] name)
 {
-	if (strcmp(name, "adminmenu") == 0)
-	{
-		hTopMenu = null;
-	}
+    if (strcmp(name, "adminmenu") == 0)
+    {
+        hTopMenu = null;
+    }
 }
