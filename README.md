@@ -38,9 +38,10 @@ sourcemod-nativevotes-updated
 - [fixed a bug where you can spam invalid votes and forcibly prematurely change the level](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/20)
 - [removed an unnecessary ThrowNativeError](https://github.com/sapphonie/sourcemod-nativevotes-updated/pull/21)
 
-This repo also autoreleases all changes to master, compiled on SM 1.10 and SM 1.11. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
+This repo also autoreleases all changes to master, compiled on SM 1.11 and SM 1.12. Check out the latest release [here](https://github.com/sapphonie/sourcemod-nativevotes-updated/releases/latest).
 
 NativeVotes is a SourceMod Plugin that lets plugins use the L4D/L4D2/TF2/CSGO built-in vote screens.
 It supplies an API that plugins can use to create and display these votes.
 
 It replaces the BuiltinVotes SourceMod extension and has a few new features as well as bugfixes.
+
