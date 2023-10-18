@@ -370,6 +370,7 @@ static ConVar g_Cvar_HideDisabledIssues;
 static int s_nNativeVoteIdx = 0;
 
 bool isTF2SDKModHack = false;
+
 bool Game_IsGameSupported(char[] engineName="", int maxlength=0)
 {
 	g_EngineVersion = GetEngineVersion();
@@ -394,6 +395,13 @@ bool Game_IsGameSupported(char[] engineName="", int maxlength=0)
 		{
 			return true;
 		}
+	}
+
+	//Fix for Open Fortress
+	if (g_EngineVersion == Engine_SDK2013 && StrEqual(gameDir, "open_fortress"))
+	{
+		g_EngineVersion = Engine_TF2;
+		return true;
 	}
 	
 	return false;
