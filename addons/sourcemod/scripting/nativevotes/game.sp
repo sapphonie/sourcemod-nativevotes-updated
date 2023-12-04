@@ -391,7 +391,7 @@ bool Game_IsGameSupported(char[] engineName="", int maxlength=0)
 	}
 
 	//Fix for Open Fortress
-	if (g_EngineVersion == Engine_SDK2013 && StrEqual(gameDir, "open_fortress"))
+	if ( g_EngineVersion == Engine_SDK2013 && ( StrEqual(gameDir, "open_fortress") || StrEqual(gameDir, "tf2classic") ) )
 	{
 		g_EngineVersion = Engine_TF2;
 	}
