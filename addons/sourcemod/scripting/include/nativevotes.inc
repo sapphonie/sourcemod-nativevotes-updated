@@ -1502,6 +1502,38 @@ public SharedPlugin __pl_nativevotes =
 #if !defined REQUIRE_PLUGIN
 public void __pl_nativevotes_SetNTVOptional()
 {
+	MarkNativeAsOptional("NativeVote.NativeVote");
+	MarkNativeAsOptional("NativeVote.Close");
+	MarkNativeAsOptional("NativeVote.AddItem");
+	MarkNativeAsOptional("NativeVote.InsertItem");
+	MarkNativeAsOptional("NativeVote.RemoveItem");
+	MarkNativeAsOptional("NativeVote.RemoveAllItems");
+	MarkNativeAsOptional("NativeVote.GetItem");
+	MarkNativeAsOptional("NativeVote.SetDetails");
+	MarkNativeAsOptional("NativeVote.GetDetails");
+	MarkNativeAsOptional("NativeVote.SetTitle");
+	MarkNativeAsOptional("NativeVote.GetTitle");
+	MarkNativeAsOptional("NativeVote.SetTarget");
+	MarkNativeAsOptional("NativeVote.GetTarget");
+	MarkNativeAsOptional("NativeVote.GetTargetSteam");
+	MarkNativeAsOptional("NativeVote.DisplayVote");
+	MarkNativeAsOptional("NativeVote.DisplayVoteToAll");
+	MarkNativeAsOptional("NativeVote.DisplayPass");
+	MarkNativeAsOptional("NativeVote.DisplayPassCustomToOne");
+	MarkNativeAsOptional("NativeVote.DisplayPassCustom");
+	MarkNativeAsOptional("NativeVote.DisplayPassEx");
+	MarkNativeAsOptional("NativeVote.DisplayFail");
+	MarkNativeAsOptional("NativeVote.OptionFlags.get");
+	MarkNativeAsOptional("NativeVote.OptionFlags.set");
+	MarkNativeAsOptional("NativeVote.NoVoteButton.set");
+	MarkNativeAsOptional("NativeVote.VoteResultCallback.set");
+	MarkNativeAsOptional("NativeVote.ItemCount.get");
+	MarkNativeAsOptional("NativeVote.VoteType.get");
+	MarkNativeAsOptional("NativeVote.Team.get");
+	MarkNativeAsOptional("NativeVote.Team.set");
+	MarkNativeAsOptional("NativeVote.Initiator.get");
+	MarkNativeAsOptional("NativeVote.Initiator.set");
+
 	MarkNativeAsOptional("NativeVotes_IsVoteTypeSupported");
 	MarkNativeAsOptional("NativeVotes_Create");
 	MarkNativeAsOptional("NativeVotes_Close");
